@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Great_Vibes, Cinzel, Noto_Serif } from "next/font/google";
+import { Great_Vibes, Cinzel, Noto_Serif, Platypi } from "next/font/google";
 import "./globals.css";
 
 const headingFont = Cinzel({
@@ -24,13 +24,12 @@ const scriptFont = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Sarah & Michael - Wedding Invitation",
+  title: "Hoàng Long & Ngọc Yến - Wedding Invitation",
   description:
     "Join us as we celebrate our special day. RSVP for our wedding ceremony and reception.",
-  keywords: ["wedding", "invitation", "Sarah", "Michael", "RSVP"],
-  authors: [{ name: "Sarah & Michael" }],
+  authors: [{ name: "Long" }],
   openGraph: {
-    title: "Sarah & Michael - Wedding Invitation",
+    title: "Hoàng Long & Ngpc Yến - Wedding Invitation",
     description: "Join us as we celebrate our special day",
     type: "website",
   },

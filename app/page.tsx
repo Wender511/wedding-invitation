@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Lenis from "@studio-freight/lenis";
 import Hero from "@/components/hero/Hero";
+import CoupleIntro from "@/components/couple/CoupleIntro";
 
 export default function Home() {
   useEffect(() => {
@@ -33,21 +34,7 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <Hero />
-
-      {/* RSVP Section Placeholder */}
-      <section
-        id="rsvp"
-        className="min-h-screen flex items-center justify-center bg-neutral-50"
-      >
-        <div className="text-center">
-          <h2 className="font-heading text-4xl md:text-6xl text-neutral-800 mb-4">
-            RSVP
-          </h2>
-          <p className="text-lg text-neutral-600">
-            Form sẽ được thêm ở bước tiếp theo
-          </p>
-        </div>
-      </section>
+      <CoupleIntro />
     </main>
   );
 }

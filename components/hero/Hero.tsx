@@ -28,12 +28,13 @@ export default function Hero() {
           className="object-cover object-center md:hidden"
         />
         <Image
-          src="/2O4A0091-pc.jpg"
+          src="/2O4A0125-pc.jpg"
           alt="Wedding hero"
           fill
           loading="eager"
-          sizes="(max-width: 767px) 0vw, 100vw"
-          className="hidden object-cover object-[50%_40%] md:block"
+          sizes="(max-width: 767px) 100vw"
+          className="hidden object-cover md:block"
+          unoptimized
         />
         <div className="absolute inset-0 bg-linear-to-b from-black/5 via-black/20 to-black/55" />
       </motion.div>
@@ -41,11 +42,11 @@ export default function Hero() {
       {/* Overlay Text */}
       <div className="relative z-10 flex min-h-dvh flex-col">
         {/* Caption */}
-        <div className="px-6 pt-[max(2.5rem)]">
+        <div className="px-6 pt-[max(2rem)]">
           <motion.h1
             initial={{ opacity: 0, y: 24, letterSpacing: "0.06em" }}
             animate={{ opacity: 1, y: 0, letterSpacing: "0em" }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 2, ease: [0.3, 1, 0.3, 1] }}
             className="text-center font-script text-5xl md:text-7xl text-white"
             style={{
               textShadow:
@@ -59,14 +60,12 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="mt-3 text-center font-serif text-xl md:text-base tracking-[0.25em] text-white/95"
+            className="mt-3 text-center text-xl md:text-base tracking-[0.25em] text-white/95"
             style={{
               textShadow: "0 1px 6px rgba(0,0,0,.4)",
             }}
           >
             HOÀNG LONG
-            <br className="md:hidden" />
-            &
             <br className="md:hidden" />
             <span className="hidden md:inline"> &nbsp;•&nbsp; </span>
             NGỌC YẾN
