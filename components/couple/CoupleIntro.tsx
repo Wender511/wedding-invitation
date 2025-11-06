@@ -10,7 +10,8 @@ const copy = {
   heading: {
     primary:
       "\u0054\u0048\u01AF \u004D\u1EDC\u0049 \u0054\u0048\u0041\u004D \u0044\u1EF0 \u004C\u1EC4 \u0043\u01AF\u1EDA\u0049",
-    secondary: "\u0053\u0056\u0041\u0054\u0045\u0042\u004E\u00CD \u0050\u004F\u005A\u0056\u00C1\u004E\u004B\u0041",
+    secondary:
+      "\u0053\u0056\u0041\u0054\u0045\u0042\u004E\u00CD \u0050\u004F\u005A\u0056\u00C1\u004E\u004B\u0041",
   },
   intro: {
     vi: "\u0054\u0072\u00E2\u006E\u0020\u0074\u0072\u1ECD\u006E\u0067\u0020\u006B\u00ED\u006E\u0068\u0020\u006D\u1EDD\u0069\u0020\u0111\u1EBF\u006E\u0020\u0064\u1EF1\u0020\u0062\u0075\u1ED5\u0069\u0020\u006C\u1EC5\u0020\u0063\u01B0\u1EDB\u0069\u0020\u0063\u1EE7\u0061",
@@ -20,7 +21,7 @@ const copy = {
     label: "\u0043\u0068\u00FA\u0020\u0072\u1EC3",
     labelCz: "\u017D\u0065\u006E\u0069\u0063\u0068",
     name: "\u0054\u0055\u1EA4\u004E\u0020\u004E\u0047\u0055\u0059\u1EC4\u004E",
-    image: "/2O4A0071.jpg",
+    image: "",
     alt: "\u0043\u0068\u00FA\u0020\u0072\u1EC3\u0020\u0054\u0075\u1EA5\u006E\u0020\u004E\u0067\u0075\u1EC7\u006E",
   },
   bride: {
@@ -116,14 +117,16 @@ export default function CoupleIntro() {
 
   return (
     <motion.section
+      id="couple"
+      data-scroll-section="true"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.35 }}
-      className="bg-white py-16 md:py-24"
+      className="bg-white py-12 md:py-10 min-h-dvh snap-start"
     >
       <motion.div
         variants={containerVariants}
-        className="mx-auto flex max-w-4xl flex-col items-center gap-10 px-6 md:gap-12 md:px-10"
+        className="mx-auto flex w-full max-w-4xl flex-col items-center gap-10 px-6 md:gap-12 md:px-10"
       >
         <motion.div
           variants={textVariants}
@@ -154,28 +157,28 @@ export default function CoupleIntro() {
         >
           <motion.article
             variants={cardVariants}
-            className="flex flex-col overflow-hidden rounded-[1.75rem]"
+            className="flex flex-col overflow-hidden "
             // style={{ rotate: groomRotation }}
             // {...getHoverProps(groomRotation)}
           >
             <div className="px-6 pb-6 pt-8 text-center md:px-7">
               <p className="text-sm italic text-neutral-500 md:text-base">
-                {copy.groom.label}{" "}
+                Chú rể
                 <span className="ml-2 text-xs uppercase tracking-[0.4em] text-neutral-400 md:text-[0.7rem]">
-                  {copy.groom.labelCz}
+                  Groom
                 </span>
               </p>
-              <p className="mt-3 font-serif text-2xl font-semibold uppercase tracking-[0.25em] text-neutral-800 md:text-[2.1rem]">
-                {copy.groom.name}
+              <p className="mt-3 text-2xl font-semibold uppercase tracking-[0.25em] text-neutral-800 md:text-[2.1rem]">
+                Hoàng Long
               </p>
             </div>
-            <div className="relative aspect-[3/4] w-full">
+            <div className="relative aspect-3/4 w-full">
               <Image
-                src={copy.groom.image}
-                alt={copy.groom.alt}
+                src="/2O4A0200.jpg"
+                alt="Chú rể Hoàng Long"
                 fill
                 sizes="(max-width: 767px) 80vw, 320px"
-                className="object-cover"
+                className="object-cover rounded-[1.75rem]"
                 priority
               />
             </div>
@@ -187,10 +190,10 @@ export default function CoupleIntro() {
             // style={{ rotate: brideRotation }}
             // {...getHoverProps(brideRotation)}
           >
-            <div className="relative aspect-[3/4] w-full">
+            <div className="relative aspect-3/4 w-full">
               <Image
-                src={copy.bride.image}
-                alt={copy.bride.alt}
+                src="/2O4A0174.jpg"
+                alt="Cô dâu Ngọc Yến"
                 fill
                 sizes="(max-width: 767px) 80vw, 320px"
                 className="object-cover"
@@ -198,13 +201,13 @@ export default function CoupleIntro() {
             </div>
             <div className="px-6 pb-6 pt-8 text-center md:px-7">
               <p className="text-sm italic text-neutral-500 md:text-base">
-                {copy.bride.label}{" "}
+                Cô dâu
                 <span className="ml-2 text-xs uppercase tracking-[0.4em] text-neutral-400 md:text-[0.7rem]">
-                  {copy.bride.labelCz}
+                  Bride
                 </span>
               </p>
-              <p className="mt-3 font-serif text-2xl font-semibold uppercase tracking-[0.25em] text-neutral-800 md:text-[2.1rem]">
-                {copy.bride.name}
+              <p className="mt-3 text-2xl font-semibold uppercase tracking-[0.25em] text-neutral-800 md:text-[2.1rem]">
+                Ngọc Yến
               </p>
             </div>
           </motion.article>

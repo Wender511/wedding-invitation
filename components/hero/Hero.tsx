@@ -16,7 +16,11 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-dvh overflow-hidden">
+    <section
+      id="hero"
+      data-scroll-section="true"
+      className="relative min-h-dvh snap-start overflow-hidden"
+    >
       {/* Background */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10">
         <Image

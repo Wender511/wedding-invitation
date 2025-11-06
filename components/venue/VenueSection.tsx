@@ -1,0 +1,230 @@
+"use client";
+
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { MapPin } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const ease = [0.16, 1, 0.3, 1] as const;
+
+function CrestIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 140 140"
+      role="presentation"
+      aria-hidden="true"
+      className={cn("size-20 text-neutral-300 md:size-[5.5rem]", className)}
+    >
+      <circle
+        cx="70"
+        cy="70"
+        r="58"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+        opacity="0.35"
+      />
+      <path
+        d="M42 92c-9-8-14-19-14-32 0-15 9-28 23-32"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        opacity="0.45"
+      />
+      <path
+        d="M98 92c9-8 14-19 14-32 0-15-9-28-23-32"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        opacity="0.45"
+      />
+      <path
+        d="M46 46c6 16 14 24 24 28"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        opacity="0.55"
+      />
+      <path
+        d="M94 46c-6 16-14 24-24 28"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        opacity="0.55"
+      />
+      <path
+        d="M70 50c8-10 20-10 28 0"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        opacity="0.4"
+      />
+      <path
+        d="M70 50c-8-10-20-10-28 0"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        opacity="0.4"
+      />
+      <circle
+        cx="70"
+        cy="74"
+        r="18"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill="none"
+        opacity="0.4"
+      />
+      <text
+        x="50%"
+        y="50%"
+        dominantBaseline="middle"
+        textAnchor="middle"
+        fontFamily="var(--font-heading, serif)"
+        fontSize="22"
+        letterSpacing="6"
+        fill="currentColor"
+        opacity="0.55"
+      >
+        L&Y
+      </text>
+    </svg>
+  );
+}
+
+export default function VenueSection() {
+  const prefersReducedMotion = useReducedMotion();
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 32 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: prefersReducedMotion ? 0 : 0.7,
+        ease,
+        when: "beforeChildren",
+        staggerChildren: prefersReducedMotion ? 0 : 0.16,
+      },
+    },
+  };
+
+  const crestVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 18 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: prefersReducedMotion ? 0 : 0.7, ease },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 24 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: prefersReducedMotion ? 0 : 0.65, ease },
+    },
+  };
+
+  return (
+    <motion.section
+      id="venue"
+      data-scroll-section="true"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.3 }}
+      className="bg-white py-16 md:py-20"
+    >
+      <div className="mx-auto flex w-full max-w-6xl justify-center px-6 md:px-10">
+        <motion.article
+          variants={containerVariants}
+          className="relative flex w-full max-w-xl flex-col items-center overflow-hidden rounded-[2.75rem] border border-neutral-100 bg-white/90 px-8 py-14 text-center shadow-[0_24px_70px_rgba(15,23,42,0.08)] md:max-w-2xl md:px-14 md:py-16"
+        >
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-8 h-px w-36 -translate-x-1/2 bg-gradient-to-r from-transparent via-neutral-200 to-transparent md:top-10 md:w-48"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-8 left-1/2 h-px w-36 -translate-x-1/2 bg-gradient-to-r from-transparent via-neutral-200 to-transparent md:bottom-10 md:w-48"
+          />
+
+          <motion.div variants={crestVariants} className="flex flex-col items-center">
+            <CrestIcon />
+          </motion.div>
+
+          <motion.p
+            variants={itemVariants}
+            className="mt-8 text-[0.7rem] uppercase tracking-[0.45em] text-neutral-400 md:mt-10 md:text-xs"
+          >
+            Được tổ chức tại – Koná se v
+          </motion.p>
+
+          <motion.h2
+            variants={itemVariants}
+            className="mt-4 font-script text-4xl text-neutral-700 md:mt-5 md:text-5xl"
+          >
+            Chateau St. Havel
+          </motion.h2>
+
+          <motion.p
+            variants={itemVariants}
+            className="mt-2 text-base text-neutral-600 md:text-lg"
+          >
+            Před Nádražím 1/6, Praha 4
+          </motion.p>
+
+          <motion.div
+            variants={itemVariants}
+            className="mt-10 flex flex-col items-center gap-3 md:mt-12"
+          >
+            <p className="text-[0.7rem] uppercase tracking-[0.4em] text-neutral-400 md:text-xs">
+              Vào lúc • V čase
+            </p>
+            <p className="font-heading text-4xl font-semibold text-neutral-800 md:text-5xl">
+              11:00
+            </p>
+            <div className="mt-6 rounded-full border border-neutral-200/80 bg-neutral-50/70 px-6 py-3 text-[0.7rem] uppercase tracking-[0.35em] text-neutral-600 shadow-[0_16px_40px_rgba(15,23,42,0.08)] md:text-sm">
+              <span className="font-semibold text-neutral-700">Sobota</span>
+              <span className="mx-3 text-neutral-300">|</span>
+              <span>16.08.2025</span>
+            </div>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="mt-10 md:mt-12">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full border-neutral-200 bg-white/80 px-6 py-3 text-xs font-medium uppercase tracking-[0.32em] text-neutral-700 transition-colors hover:bg-neutral-100/80 md:px-10 md:py-4 md:text-sm"
+            >
+              <Link
+                href="https://maps.google.com/?q=Chateau+St.+Havel"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MapPin className="size-5" />
+                Chỉ đường – Navigace
+              </Link>
+            </Button>
+          </motion.div>
+        </motion.article>
+      </div>
+    </motion.section>
+  );
+}
