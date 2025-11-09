@@ -7,6 +7,8 @@ import CoupleIntro from "@/components/couple/CoupleIntro";
 import StorySection from "@/components/story/StorySection";
 import VenueSection from "@/components/venue/VenueSection";
 import WeddingCalendar from "@/components/calendar/WeddingCalendar";
+import Album from "@/components/gallery/Album";
+import Test from "@/components/carousel/carousel";
 
 const SCROLL_DURATION = 1.05;
 const SCROLL_TIMEOUT = SCROLL_DURATION * 1000 + 250;
@@ -208,6 +210,7 @@ export default function Home() {
       <StorySection />
       <VenueSection />
       <WeddingCalendar />
+      <Album />
     </main>
   );
 }
