@@ -4,34 +4,30 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const hoverEase = [0.22, 1, 0.36, 1] as const;
-
-const copy = {
-  heading: {
-    primary:
-      "\u0054\u0048\u01AF \u004D\u1EDC\u0049 \u0054\u0048\u0041\u004D \u0044\u1EF0 \u004C\u1EC4 \u0043\u01AF\u1EDA\u0049",
-    secondary:
-      "\u0053\u0056\u0041\u0054\u0045\u0042\u004E\u00CD \u0050\u004F\u005A\u0056\u00C1\u004E\u004B\u0041",
-  },
-  intro: {
-    vi: "\u0054\u0072\u00E2\u006E\u0020\u0074\u0072\u1ECD\u006E\u0067\u0020\u006B\u00ED\u006E\u0068\u0020\u006D\u1EDD\u0069\u0020\u0111\u1EBF\u006E\u0020\u0064\u1EF1\u0020\u0062\u0075\u1ED5\u0069\u0020\u006C\u1EC5\u0020\u0063\u01B0\u1EDB\u0069\u0020\u0063\u1EE7\u0061",
-    cz: "\u0053\u0072\u0064\u0065\u010D\u006E\u011B\u0020\u0056\u00E1\u0073\u0020\u007A\u0076\u0065\u006D\u0065\u0020\u006E\u0061\u0020\u006E\u00E1\u0161\u0020\u0076\u00FD\u007A\u006E\u0061\u006D\u006E\u00FD\u0020\u0064\u0065\u006E",
-  },
-  groom: {
-    label: "\u0043\u0068\u00FA\u0020\u0072\u1EC3",
-    labelCz: "\u017D\u0065\u006E\u0069\u0063\u0068",
-    name: "\u0054\u0055\u1EA4\u004E\u0020\u004E\u0047\u0055\u0059\u1EC4\u004E",
-    image: "",
-    alt: "\u0043\u0068\u00FA\u0020\u0072\u1EC3\u0020\u0054\u0075\u1EA5\u006E\u0020\u004E\u0067\u0075\u1EC7\u006E",
-  },
-  bride: {
-    label: "\u0043\u00F4\u0020\u0064\u00E2\u0075",
-    labelCz: "\u006E\u0065\u0076\u011B\u0073\u0074\u0061",
-    name: "\u0048\u0055\u0059\u1EC0\u004E\u0020\u004C\u00CA",
-    image: "/2O4A9965.jpg",
-    alt: "\u0043\u00F4\u0020\u0064\u00E2\u0075\u0020\u0048\u0075\u0079\u1EC1\u006E\u0020\u004C\u00CA",
-  },
-} as const;
+// const copy = {
+//   heading: {
+//     primary: 'Thư mời tham dự lễ cưới',
+//     secondary: 'Invitation to the Wedding Ceremony'
+//   },
+//   intro: {
+//     vi: 'Trân trọng kính mời đến dự buổi lễ cưới của',
+//     cz: 'We cordially invite you to attend the wedding ceremony of'
+//   },
+//   groom: {
+//     label: 'Chú rể',
+//     labelCz: '\u017D\u0065\u006E\u0069\u0063\u0068',
+//     name: '\u0054\u0055\u1EA4\u004E\u0020\u004E\u0047\u0055\u0059\u1EC4\u004E',
+//     image: '',
+//     alt: '\u0043\u0068\u00FA\u0020\u0072\u1EC3\u0020\u0054\u0075\u1EA5\u006E\u0020\u004E\u0067\u0075\u1EC7\u006E'
+//   },
+//   bride: {
+//     label: '\u0043\u00F4\u0020\u0064\u00E2\u0075',
+//     labelCz: '\u006E\u0065\u0076\u011B\u0073\u0074\u0061',
+//     name: '\u0048\u0055\u0059\u1EC0\u004E\u0020\u004C\u00CA',
+//     image: '/2O4A9965.jpg',
+//     alt: '\u0043\u00F4\u0020\u0064\u00E2\u0075\u0020\u0048\u0075\u0079\u1EC1\u006E\u0020\u004C\u00CA'
+//   }
+// } as const;
 
 export default function CoupleIntro() {
   const prefersReducedMotion = useReducedMotion();
@@ -95,26 +91,6 @@ export default function CoupleIntro() {
     },
   };
 
-  const groomRotation = prefersReducedMotion ? 0 : -1.5;
-  const brideRotation = prefersReducedMotion ? 0 : 1.5;
-
-  const getHoverProps = (baseRotation: number) =>
-    prefersReducedMotion
-      ? {}
-      : {
-          whileHover: {
-            rotate: baseRotation > 0 ? baseRotation - 2 : baseRotation + 2,
-            y: -6,
-            boxShadow: "0 24px 40px rgba(15, 23, 42, 0.18)",
-            transition: { duration: 0.25, ease: hoverEase },
-          },
-          whileTap: {
-            rotate: baseRotation > 0 ? baseRotation - 2 : baseRotation + 2,
-            y: -6,
-            boxShadow: "0 24px 40px rgba(15, 23, 42, 0.18)",
-          },
-        };
-
   return (
     <motion.section
       id="couple"
@@ -133,10 +109,10 @@ export default function CoupleIntro() {
           className="flex flex-col items-center gap-2 text-center"
         >
           <p className="font-serif text-[0.7rem] uppercase tracking-[0.4em] text-neutral-500 md:text-xs">
-            {copy.heading.primary}
+            Thư mời tham dự lễ cưới
           </p>
           <p className="font-serif text-[0.7rem] uppercase tracking-[0.4em] text-neutral-400 md:text-xs">
-            {copy.heading.secondary}
+            Invitation to the Wedding Ceremony
           </p>
         </motion.div>
 
@@ -146,8 +122,10 @@ export default function CoupleIntro() {
         >
           <div className="h-8 w-px bg-neutral-300" />
           <p className="max-w-xl font-sans text-sm font-light leading-relaxed text-neutral-500 md:text-base">
-            {copy.intro.vi}
-            <span className="mt-1 block text-neutral-400">{copy.intro.cz}</span>
+            Trân trọng kính mời đến dự buổi lễ cưới của
+            <span className="mt-1 block text-neutral-400">
+              We cordially invite you to attend the wedding ceremony of
+            </span>
           </p>
         </motion.div>
         {/* change */}

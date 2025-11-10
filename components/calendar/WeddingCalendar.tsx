@@ -54,10 +54,10 @@ export default function WeddingCalendar() {
       whileInView="show"
       viewport={{ once: true, amount: 0.4 }}
       variants={containerVariants}
-      className="px-6 py-16 md:px-10 md:py-20"
+      className="px-6 py-16 md:px-10 md:py-20 h-dvh"
     >
-      <div className="mx-auto w-full max-w-3xl">
-        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[2.25rem] shadow-xl">
+      <div className="mx-auto w-full max-w-3xl h-full">
+        <div className="relative w-full overflow-hidden rounded-[2.25rem] shadow-xl h-full">
           <Image
             src={backgroundImage}
             alt={`${monthName} ${year} calendar background`}
@@ -65,6 +65,7 @@ export default function WeddingCalendar() {
             sizes="(max-width: 768px) 100vw, 768px"
             className="object-cover"
             priority
+            unoptimized
           />
           <div className="pointer-events-none absolute inset-0 bg-black/30" aria-hidden />
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 py-8 text-white md:px-16 md:py-12">

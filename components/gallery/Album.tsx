@@ -83,9 +83,9 @@ export default function Album() {
     <section
       id="album-gallery"
       data-scroll-section="true"
-      className="mx-auto flex h-dvh w-full max-w-3xl items-center px-4 sm:px-6"
+      className="mx-auto flex h-dvh w-full max-w-3xl items-center sm:px-6"
     >
-      <div className="flex w-full flex-col gap-6">
+      <div className="flex w-full flex-col gap-6 h-full">
         <div
           className={cn(
             "relative w-full overflow-hidden rounded-2xl bg-neutral-900/40",
@@ -135,6 +135,7 @@ export default function Album() {
                       sizes="(max-width: 768px) 92vw, 720px"
                       className="object-cover object-center"
                       priority={index === 0}
+
                     />
                   </div>
                 </div>
