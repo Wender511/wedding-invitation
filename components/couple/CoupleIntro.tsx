@@ -131,22 +131,22 @@ export default function CoupleIntro() {
         {/* change */}
         <motion.div
           variants={cardsContainerVariants}
-          className="grid w-full gap-8 md:grid-cols-2 md:gap-12"
+          className="grid w-full grid-cols-2 gap-4 sm:gap-6 md:gap-12"
         >
           <motion.article
             variants={cardVariants}
-            className="flex flex-col overflow-hidden "
+            className="flex flex-col overflow-hidden rounded-[1.5rem]"
             // style={{ rotate: groomRotation }}
             // {...getHoverProps(groomRotation)}
           >
-            <div className="px-6 pb-6 pt-8 text-center md:px-7">
-              <p className="text-sm italic text-neutral-500 md:text-base">
+            <div className="px-3 pb-4 pt-6 text-center md:px-7 md:pb-6 md:pt-8">
+              <p className="text-xs italic text-neutral-500 sm:text-sm md:text-base">
                 Chú rể
-                <span className="ml-2 text-xs uppercase tracking-[0.4em] text-neutral-400 md:text-[0.7rem]">
+                <span className="ml-2 text-[0.6rem] uppercase tracking-[0.4em] text-neutral-400 sm:text-xs md:text-[0.7rem]">
                   Groom
                 </span>
               </p>
-              <p className="mt-3 text-2xl font-semibold uppercase tracking-[0.25em] text-neutral-800 md:text-[2.1rem]">
+              <p className="mt-2 text-xl font-semibold uppercase tracking-[0.25em] text-neutral-800 sm:mt-3 sm:text-2xl md:text-[2.1rem]">
                 Hoàng Long
               </p>
             </div>
@@ -155,8 +155,8 @@ export default function CoupleIntro() {
                 src="/2O4A0200.jpg"
                 alt="Chú rể Hoàng Long"
                 fill
-                sizes="(max-width: 767px) 80vw, 320px"
-                className="object-cover rounded-[1.75rem]"
+                sizes="(max-width: 767px) 45vw, 320px"
+                className="rounded-[1.5rem] object-cover"
                 priority
               />
             </div>
@@ -164,7 +164,7 @@ export default function CoupleIntro() {
 
           <motion.article
             variants={cardVariants}
-            className="flex flex-col overflow-hidden rounded-[1.75rem]"
+            className="flex flex-col overflow-hidden rounded-[1.5rem]"
             // style={{ rotate: brideRotation }}
             // {...getHoverProps(brideRotation)}
           >
@@ -173,18 +173,18 @@ export default function CoupleIntro() {
                 src="/2O4A0174.jpg"
                 alt="Cô dâu Ngọc Yến"
                 fill
-                sizes="(max-width: 767px) 80vw, 320px"
-                className="object-cover"
+                sizes="(max-width: 767px) 45vw, 320px"
+                className="rounded-[1.5rem] object-cover"
               />
             </div>
-            <div className="px-6 pb-6 pt-8 text-center md:px-7">
-              <p className="text-sm italic text-neutral-500 md:text-base">
+            <div className="px-3 pb-4 pt-6 text-center md:px-7 md:pb-6 md:pt-8">
+              <p className="text-xs italic text-neutral-500 sm:text-sm md:text-base">
                 Cô dâu
-                <span className="ml-2 text-xs uppercase tracking-[0.4em] text-neutral-400 md:text-[0.7rem]">
+                <span className="ml-2 text-[0.6rem] uppercase tracking-[0.4em] text-neutral-400 sm:text-xs md:text-[0.7rem]">
                   Bride
                 </span>
               </p>
-              <p className="mt-3 text-2xl font-semibold uppercase tracking-[0.25em] text-neutral-800 md:text-[2.1rem]">
+              <p className="mt-2 text-xl font-semibold uppercase tracking-[0.25em] text-neutral-800 sm:mt-3 sm:text-2xl md:text-[2.1rem]">
                 Ngọc Yến
               </p>
             </div>
