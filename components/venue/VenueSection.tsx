@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
-import { MapPin } from "lucide-react";
+import Link from 'next/link';
+import { motion, useReducedMotion } from 'framer-motion';
+import { MapPin } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -15,7 +15,7 @@ function CrestIcon({ className }: { className?: string }) {
       viewBox="0 0 140 140"
       role="presentation"
       aria-hidden="true"
-      className={cn("size-20 text-neutral-300 md:size-[5.5rem]", className)}
+      className={cn('size-20 text-neutral-500 md:size-22', className)}
     >
       <circle
         cx="70"
@@ -117,10 +117,10 @@ export default function VenueSection() {
       transition: {
         duration: prefersReducedMotion ? 0 : 0.7,
         ease,
-        when: "beforeChildren",
-        staggerChildren: prefersReducedMotion ? 0 : 0.16,
-      },
-    },
+        when: 'beforeChildren',
+        staggerChildren: prefersReducedMotion ? 0 : 0.16
+      }
+    }
   };
 
   const crestVariants = {
@@ -128,8 +128,8 @@ export default function VenueSection() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: prefersReducedMotion ? 0 : 0.7, ease },
-    },
+      transition: { duration: prefersReducedMotion ? 0 : 0.7, ease }
+    }
   };
 
   const itemVariants = {
@@ -137,8 +137,8 @@ export default function VenueSection() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: prefersReducedMotion ? 0 : 0.65, ease },
-    },
+      transition: { duration: prefersReducedMotion ? 0 : 0.65, ease }
+    }
   };
 
   return (
@@ -157,11 +157,11 @@ export default function VenueSection() {
         >
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-8 h-px w-36 -translate-x-1/2 bg-gradient-to-r from-transparent via-neutral-200 to-transparent md:top-10 md:w-48"
+            className="pointer-events-none absolute left-1/2 top-8 h-px w-36 -translate-x-1/2 bg-linear-to-r from-transparent via-neutral-200 to-transparent md:top-10 md:w-48"
           />
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute bottom-8 left-1/2 h-px w-36 -translate-x-1/2 bg-gradient-to-r from-transparent via-neutral-200 to-transparent md:bottom-10 md:w-48"
+            className="pointer-events-none absolute bottom-8 left-1/2 h-px w-36 -translate-x-1/2 bg-linear-to-r from-transparent via-neutral-200 to-transparent md:bottom-10 md:w-48"
           />
 
           <motion.div variants={crestVariants} className="flex flex-col items-center">
@@ -172,41 +172,43 @@ export default function VenueSection() {
             variants={itemVariants}
             className="mt-8 text-[0.7rem] uppercase tracking-[0.45em] text-neutral-400 md:mt-10 md:text-xs"
           >
-            Được tổ chức tại – Koná se v
+            Được tổ chức tại – Hosted at
           </motion.p>
 
           <motion.h2
             variants={itemVariants}
-            className="mt-4 font-script text-4xl text-neutral-700 md:mt-5 md:text-5xl"
+            className="mt-4 font-script text-3xl text-neutral-700 md:mt-5 md:text-4xl"
           >
-            Chateau St. Havel
+            Lo Ren Street
           </motion.h2>
-
-          <motion.p
+          <motion.h2
             variants={itemVariants}
-            className="mt-2 text-base text-neutral-600 md:text-lg"
+            className="font-script text-3xl text-neutral-700 md:mt-5 md:text-4xl"
           >
-            Před Nádražím 1/6, Praha 4
+            Minh Thanh Commune
+          </motion.h2>
+          <motion.p variants={itemVariants} className="mt-2 text-base text-neutral-600 md:text-lg">
+            Ho Chi Minh City
           </motion.p>
 
           <motion.div
             variants={itemVariants}
-            className="mt-10 flex flex-col items-center gap-3 md:mt-12"
+            className="mt-5 flex flex-col items-center gap-3 md:mt-12"
           >
             <p className="text-[0.7rem] uppercase tracking-[0.4em] text-neutral-400 md:text-xs">
-              Vào lúc • V čase
+              Vào lúc • At
             </p>
             <p className="font-heading text-4xl font-semibold text-neutral-800 md:text-5xl">
               11:00
             </p>
-            <div className="mt-6 rounded-full border border-neutral-200/80 bg-neutral-50/70 px-6 py-3 text-[0.7rem] uppercase tracking-[0.35em] text-neutral-600 shadow-[0_16px_40px_rgba(15,23,42,0.08)] md:text-sm">
-              <span className="font-semibold text-neutral-700">Sobota</span>
+            <div className="mt-5 rounded-full border border-neutral-200/80 bg-neutral-50/70 px-6 py-3 text-[0.7rem] uppercase tracking-[0.35em] text-neutral-600 shadow-[0_16px_40px_rgba(15,23,42,0.08)] md:text-sm">
+              <span className="font-semibold text-neutral-700">Saturday</span>
               <span className="mx-3 text-neutral-300">|</span>
               <span>16.08.2025</span>
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="mt-10 md:mt-12">
+          <motion.div variants={itemVariants} className="mt-5 md:mt-12">
             <Button
               asChild
               variant="outline"
@@ -219,7 +221,7 @@ export default function VenueSection() {
                 rel="noopener noreferrer"
               >
                 <MapPin className="size-5" />
-                Chỉ đường – Navigace
+                Chỉ đường – Directions
               </Link>
             </Button>
           </motion.div>

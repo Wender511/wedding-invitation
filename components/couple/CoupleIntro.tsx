@@ -135,7 +135,7 @@ export default function CoupleIntro() {
         >
           <motion.article
             variants={cardVariants}
-            className="flex flex-col overflow-hidden rounded-[1.5rem]"
+            className="flex flex-col overflow-hidden rounded-3xl"
             // style={{ rotate: groomRotation }}
             // {...getHoverProps(groomRotation)}
           >
@@ -150,13 +150,24 @@ export default function CoupleIntro() {
                 Hoàng Long
               </p>
             </div>
-            <div className="relative aspect-3/4 w-full">
+            <div className="relative aspect-3/4 w-full hidden md:block">
               <Image
-                src="/2O4A0200.jpg"
+                src="/coupleIntro/2O4A0200-md.jpg"
                 alt="Chú rể Hoàng Long"
                 fill
                 sizes="(max-width: 767px) 45vw, 320px"
-                className="rounded-[1.5rem] object-cover"
+                className="rounded-3xl object-cover"
+                priority
+                unoptimized
+              />
+            </div>
+            <div className="relative aspect-3/6 w-full md:hidden">
+              <Image
+                src="/coupleIntro/2O4A0200.jpg"
+                alt="Chú rể Hoàng Long"
+                fill
+                sizes="(max-width: 767px) 45vw, 320px"
+                className="rounded-3xl object-cover"
                 priority
               />
             </div>
@@ -164,17 +175,27 @@ export default function CoupleIntro() {
 
           <motion.article
             variants={cardVariants}
-            className="flex flex-col overflow-hidden rounded-[1.5rem]"
+            className="flex flex-col overflow-hidden rounded-3xl"
             // style={{ rotate: brideRotation }}
             // {...getHoverProps(brideRotation)}
           >
-            <div className="relative aspect-3/4 w-full">
+            <div className="relative aspect-3/4 w-full hidden md:block">
               <Image
-                src="/2O4A0174.jpg"
+                src="/coupleIntro/2O4A0174-md.jpg"
                 alt="Cô dâu Ngọc Yến"
                 fill
                 sizes="(max-width: 767px) 45vw, 320px"
-                className="rounded-[1.5rem] object-cover"
+                className="rounded-3xl object-cover"
+                unoptimized
+              />
+            </div>
+            <div className="relative aspect-3/6 w-full md:hidden">
+              <Image
+                src="/coupleIntro/2O4A0174.jpg"
+                alt="Cô dâu Ngọc Yến"
+                fill
+                sizes="(max-width: 767px) 45vw, 320px"
+                className="rounded-3xl object-cover"
               />
             </div>
             <div className="px-3 pb-4 pt-6 text-center md:px-7 md:pb-6 md:pt-8">

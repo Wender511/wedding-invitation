@@ -8,21 +8,23 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 const copy = {
   story: {
-    vi: "Chúng tôi gặp nhau trong một buổi chiều mùa thu ở Praha, nơi những câu chuyện nhỏ bỗng hóa thành điều kỳ diệu. Từ những cuộc hẹn cà phê kéo dài tới những chuyến đi xa, chúng tôi học cách sẻ chia và lớn lên cùng nhau mỗi ngày. Đám cưới là lời hẹn ước cho những điều thật đẹp đang đợi phía trước.",
-    cz: "Naše setkání začalo jedno podzimní odpoledne v Praze, kde se obyčejné příběhy proměnily v zázrak. Od dlouhých kávových schůzek po cesty daleko jsme se učili naslouchat, sdílet i růst spolu. Naše svatba je příslibem všeho krásného, co nás čeká.",
+    vi: 'Chúng tôi gặp nhau bằng những lời thách thức ngây ngô của tuổi trẻ, khi cả hai còn khoác trên mình bộ đồng phục học sinh. Khi ấy, chẳng ai nghĩ rằng giữa những câu nói đùa ấy lại bắt đầu một hành trình dài đến thế. Từ những ngày chỉ là bạn, chưa có chút tình cảm, rồi dần học cách quan tâm, thấu hiểu và cùng nhau vượt qua mọi khó khăn. Từ tà áo dài năm ấy đến váy cưới hôm nay — 5 năm không quá dài, nhưng đủ để chúng tôi nhận ra: hạnh phúc đôi khi bắt đầu từ những điều rất giản dị — một ánh nhìn, một câu nói, hay chỉ là… một lời nói đùa ngày hôm ấy ',
+    cz: 'We met through the playful challenges of youth, back when we were still wearing our school uniforms. No one could have imagined that behind those lighthearted jokes would begin such a long and beautiful journey. From the days when we were just friends — no feelings, no promises — to the moments we learned to care, to understand, and to walk together through every joy and hardship. From the white áo dài — the Vietnamese school dress — to today’s wedding gown, five years may not be long, but it has been enough for us to realize that happiness often begins with the simplest things — a glance, a word… or just a teasing joke on that very first day.'
   },
   families: [
     {
-      title: "NHÀ TRAI",
-      subtitle: "Groom’s Family",
-      members: ["Ông Đặng Đình Phụng", "Bà La Ngọc Oanh"],
+      title: 'NHÀ TRAI',
+      subtitle: 'Groom’s Family',
+      members: ['Ông Đặng Đình Phụng', 'Bà La Ngọc Oanh'],
+      isBride: false,
     },
     {
-      title: "NHÀ GÁI",
-      subtitle: "Bride’s Family",
-      members: ["Ông Trần Văn Sỹ", "Bà Phạm Thị Thơm"],
-    },
-  ],
+      title: 'NHÀ GÁI',
+      subtitle: 'Bride’s Family',
+      members: ['Ông Trần Văn Sỹ', 'Bà Phạm Thị Thơm'],
+      isBride: true,
+    }
+  ]
 } as const;
 
 export default function StorySection() {
@@ -118,10 +120,7 @@ export default function StorySection() {
         variants={containerVariants}
         className="mx-auto flex w-full max-w-5xl flex-col items-center gap-14 px-6 md:gap-16 md:px-12"
       >
-        <motion.div
-          variants={textVariants}
-          className="max-w-4xl text-center"
-        >
+        <motion.div variants={textVariants} className="max-w-4xl text-center">
           <p className="font-sans text-base font-light leading-relaxed text-neutral-600 md:text-lg text-justify">
             {copy.story.vi}
             <span className="mt-4 block text-sm text-neutral-400 md:text-base">
@@ -130,23 +129,31 @@ export default function StorySection() {
           </p>
         </motion.div>
 
-        <motion.div
-          ref={imageRef}
-          variants={imageVariants}
-          className="w-full max-w-3xl"
-        >
+        <motion.div ref={imageRef} variants={imageVariants} className="w-full max-w-3xl">
           <motion.div
             style={parallaxStyle}
-            className="overflow-hidden rounded-[2rem] border border-neutral-100/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.1)]"
+            className="overflow-hidden rounded-4xl border border-neutral-100/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.1)]"
           >
-            <div className="relative aspect-[3/2] w-full">
+            <div className="relative aspect-4/3 md:block hidden w-full">
               <Image
-                src="/2O4A9869.jpg"
+                src="/story/2O4A9869.jpg"
                 alt="Khoảnh khắc của Long và Yến"
                 fill
                 sizes="(max-width: 767px) 100vw, 720px"
                 className="object-cover"
                 priority={false}
+                unoptimized
+              />
+            </div>
+            <div className="relative aspect-[1] w-full md:hidden block">
+              <Image
+                src="/story/2O4A9869-mobile.jpg"
+                alt="Khoảnh khắc của Long và Yến"
+                fill
+                sizes="(max-width: 767px) 100vw, 720px"
+                className="object-cover"
+                priority={false}
+                unoptimized
               />
             </div>
           </motion.div>
@@ -154,29 +161,35 @@ export default function StorySection() {
 
         <motion.div
           variants={familiesVariants}
-          className="grid w-full gap-6 text-center md:grid-cols-2 md:gap-9"
+          className="grid w-full grid-cols-2 gap-4 text-center sm:gap-6 md:gap-9"
         >
           {copy.families.map((family) => (
             <motion.article
               key={family.title}
               variants={familyCardVariants}
-              className="flex flex-col items-center rounded-[1.75rem] bg-white/70 px-8 py-10 shadow-[0_18px_38px_rgba(15,23,42,0.08)] ring-1 ring-neutral-100 md:px-10 md:py-12"
+              className="flex flex-col items-center rounded-3xl bg-white/70 px-2 py-6 shadow-[0_18px_38px_rgba(15,23,42,0.08)] ring-1 ring-neutral-100 sm:px-6 sm:py-8 md:rounded-[1.75rem] md:px-10 md:py-12"
             >
-              <p className="font-serif text-lg uppercase tracking-[0.36em] text-neutral-800 md:text-xl">
+              <p className="font-serif text-sm uppercase tracking-[0.36em] text-neutral-800 sm:text-base md:text-xl">
                 {family.title}
               </p>
-              <p className="mt-2 text-xs uppercase tracking-[0.38em] text-zinc-500 md:text-sm">
+              <p className="mt-2 text-[0.55rem] uppercase tracking-[0.38em] text-zinc-500 sm:text-xs md:text-sm">
                 {family.subtitle}
               </p>
-              <div className="mt-6 space-y-3">
-                {family.members.map((member) => (
-                  <p
-                    key={member}
-                    className="text-sm font-light uppercase tracking-[0.14em] text-neutral-500 md:text-base"
-                  >
-                    {member}
-                  </p>
-                ))}
+              <div className="mt-4 flex flex-col space-y-2 sm:mt-6 sm:space-y-3">
+                {family.members.map((member) => {
+                  const memberClasses = [
+                    "text-[0.65rem] font-light uppercase tracking-[0.14em] text-neutral-500 sm:text-xs md:text-base",
+                    family.isBride ? "mt-auto sm:mt-0" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ");
+
+                  return (
+                    <p key={member} className={memberClasses}>
+                      {member}
+                    </p>
+                  );
+                })}
               </div>
             </motion.article>
           ))}
