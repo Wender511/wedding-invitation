@@ -216,7 +216,7 @@ export default function VenueSection() {
               className="rounded-full border-neutral-200 bg-white/80 px-6 py-3 text-xs font-medium uppercase tracking-[0.32em] text-neutral-700 transition-colors hover:bg-neutral-100/80 md:px-10 md:py-4 md:text-sm"
             >
               <Link
-                href="https://maps.google.com/?q=Chateau+St.+Havel"
+                href="https://www.google.com/maps?q=11.418147087097168,106.5288314819336&z=14&t=m&mapclient=embed"
                 target="_blank"
                 rel="noopener noreferrer"
               >

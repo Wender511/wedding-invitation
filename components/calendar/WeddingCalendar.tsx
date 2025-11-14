@@ -6,7 +6,7 @@ import { Heart } from "lucide-react";
 
 const monthName = "December";
 const year = 2025;
-const backgroundImage = "/2O4A0303.jpg";
+const backgroundImage = '/2O4A9956.jpg';
 
 const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"] as const;
 const daysInMonth = Array.from({ length: 31 }, (_, index) => index + 1);
