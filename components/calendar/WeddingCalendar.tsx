@@ -54,7 +54,7 @@ export default function WeddingCalendar() {
       whileInView="show"
       viewport={{ once: true, amount: 0.4 }}
       variants={containerVariants}
-      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[60dvh] md:h-dvh snap-start"
+      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[100dvh] md:h-dvh snap-start"
     >
       <div className="mx-auto flex w-full flex-col items-center gap-10 md:gap-12 px-6 md:px-10 max-w-4xl h-full">
         <div className="relative w-full overflow-hidden rounded-[2.25rem] shadow-xl h-full">
@@ -74,8 +74,8 @@ export default function WeddingCalendar() {
                 <p className="font-script text-5xl leading-tight drop-shadow-[0_4px_10px_rgba(0,0,0,0.35)] md:text-[4.75rem]">
                   {monthName}
                 </p>
-                <p className="text-[0.55rem] uppercase tracking-[0.65em] text-white/75 md:text-xs md:tracking-[0.7em]">
-                  {year.toString()}
+                <p className="text-[1rem] uppercase tracking-[0.65em] text-white/75 md:text-base md:tracking-[0.7em]">
+                  &nbsp; {year.toString()}
                 </p>
               </div>
 

@@ -167,7 +167,7 @@ export default function StorySection() {
             <motion.article
               key={family.title}
               variants={familyCardVariants}
-              className="flex flex-col items-center rounded-3xl bg-white/70 px-2 py-6 shadow-[0_18px_38px_rgba(15,23,42,0.08)] ring-1 ring-neutral-100 sm:px-6 sm:py-8 md:rounded-[1.75rem] md:px-10 md:py-12"
+              className="flex flex-col items-center rounded-3xl bg-white/70 px-0 py-6 shadow-[0_18px_38px_rgba(15,23,42,0.08)] ring-1 ring-neutral-100 sm:px-6 sm:py-8 md:rounded-[1.75rem] md:px-10 md:py-12"
             >
               <p className="font-serif text-sm uppercase tracking-[0.36em] text-neutral-800 sm:text-base md:text-xl">
                 {family.title}
@@ -175,7 +175,7 @@ export default function StorySection() {
               <p className="mt-2 text-[0.55rem] uppercase tracking-[0.38em] text-zinc-500 sm:text-xs md:text-sm">
                 {family.subtitle}
               </p>
-              <div className="mt-4 flex flex-col space-y-2 sm:mt-6 sm:space-y-3">
+              <div className="mt-4 flex flex-col space-y-2 sm:mt-6 sm:space-y-3 w-full">
                 {family.members.map((member) => {
                   const memberClasses = [
                     'text-[0.65rem] font-light uppercase tracking-[0.14em] text-neutral-500 sm:text-xs md:text-base',

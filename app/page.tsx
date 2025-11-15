@@ -22,9 +22,9 @@ export default function Home() {
 
     const lenis = new Lenis({
       // smoothWheel: true,
-      // syncTouch: true,
+      syncTouch: true,
       // syncTouchLerp: 0.5,
-      // touchInertiaMultiplier: 5,
+      touchInertiaMultiplier: 12,
       // lerp: 0.2,
       // touchMultiplier:1
     });

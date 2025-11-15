@@ -153,7 +153,7 @@ export default function VenueSection() {
       <div className="mx-auto flex w-full flex-col items-center gap-10 md:gap-12 px-6 md:px-10 max-w-4xl">
         <motion.article
           variants={containerVariants}
-          className="relative flex w-full max-w-xl flex-col items-center overflow-hidden rounded-[2.75rem] border border-neutral-100 bg-white/90 px-8 py-14 text-center shadow-[0_24px_70px_rgba(15,23,42,0.08)] md:max-w-2xl md:px-14 md:py-16"
+          className="relative flex w-full max-w-xl flex-col items-center overflow-hidden rounded-[2.75rem] border border-neutral-100 bg-white/90 px-6 py-14 text-center shadow-[0_24px_70px_rgba(15,23,42,0.08)] md:max-w-2xl md:px-14 md:py-16"
         >
           <span
             aria-hidden="true"
@@ -172,23 +172,26 @@ export default function VenueSection() {
             variants={itemVariants}
             className="mt-8 text-[0.7rem] uppercase tracking-[0.45em] text-neutral-400 md:mt-10 md:text-xs"
           >
-            Được tổ chức tại – Hosted at
+            {/* Được tổ chức tại – Hosted at */}
+            Được tổ chức tại
           </motion.p>
 
           <motion.h2
             variants={itemVariants}
             className="mt-4 font-script text-3xl text-neutral-700 md:mt-5 md:text-4xl"
           >
-            Lo Ren Street
+            {/* Lo Ren Street */}
+            Đường Lò Rèn
           </motion.h2>
           <motion.h2
             variants={itemVariants}
             className="font-script text-3xl text-neutral-700 md:mt-5 md:text-4xl"
           >
-            Minh Thanh Commune
+            {/* Minh Thanh Commune */}
+            Xã Minh Thạnh
           </motion.h2>
           <motion.p variants={itemVariants} className="mt-2 text-base text-neutral-600 md:text-lg">
-            Ho Chi Minh City
+            TP. Hồ Chí Minh
           </motion.p>
 
           <motion.div
@@ -196,15 +199,16 @@ export default function VenueSection() {
             className="mt-5 flex flex-col items-center gap-3 md:mt-12"
           >
             <p className="text-[0.7rem] uppercase tracking-[0.4em] text-neutral-400 md:text-xs">
-              Vào lúc • At
+              {/* Vào lúc • At */}
+              Vào lúc
             </p>
             <p className="font-heading text-4xl font-semibold text-neutral-800 md:text-5xl">
               11:00
             </p>
             <div className="mt-5 rounded-full border border-neutral-200/80 bg-neutral-50/70 px-6 py-3 text-[0.7rem] uppercase tracking-[0.35em] text-neutral-600 shadow-[0_16px_40px_rgba(15,23,42,0.08)] md:text-sm">
-              <span className="font-semibold text-neutral-700">Saturday</span>
+              <span className="font-semibold text-neutral-700">Thứ Bảy</span>
               <span className="mx-3 text-neutral-300">|</span>
-              <span>16.08.2025</span>
+              <span>06.12.2025</span>
             </div>
           </motion.div>
 
@@ -221,7 +225,8 @@ export default function VenueSection() {
                 rel="noopener noreferrer"
               >
                 <MapPin className="size-5" />
-                Chỉ đường – Directions
+                {/* Chỉ đường – Directions */}
+                Chỉ đường – Tư gia
               </Link>
             </Button>
           </motion.div>
