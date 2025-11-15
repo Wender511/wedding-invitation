@@ -148,9 +148,9 @@ export default function VenueSection() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.3 }}
-      className="bg-white py-16 md:py-20"
+      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 snap-start "
     >
-      <div className="mx-auto flex w-full max-w-6xl justify-center px-6 md:px-10">
+      <div className="mx-auto flex w-full flex-col items-center gap-10 md:gap-12 px-6 md:px-10 max-w-4xl">
         <motion.article
           variants={containerVariants}
           className="relative flex w-full max-w-xl flex-col items-center overflow-hidden rounded-[2.75rem] border border-neutral-100 bg-white/90 px-8 py-14 text-center shadow-[0_24px_70px_rgba(15,23,42,0.08)] md:max-w-2xl md:px-14 md:py-16"

@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image";
 
 type RsvpFormValues = {
   name: string;
@@ -46,6 +47,20 @@ const initialValues: RsvpFormValues = {
   attendance: "",
   guests: "",
 };
+
+const giftInfo = {
+  heroImage: "/2O4A0125.jpg",
+  qrImage: "/vietqr-tran-thi-ngoc-yen.png",
+  accountHolder: "Trần Thị Ngọc Yến",
+  bankName: "Techcombank",
+  bankCode: "970432",
+  accountNumber: "8486071120",
+} as const;
+
+const formattedAccountNumber = giftInfo.accountNumber.replace(
+  /\B(?=(\d{3})+(?!\d))/g,
+  " "
+);
 
 export default function RsvpFormSection() {
   const [formValues, setFormValues] = useState<RsvpFormValues>(initialValues);
@@ -75,7 +90,7 @@ export default function RsvpFormSection() {
     <section
       id="rsvp"
       data-scroll-section="true"
-      className="bg-gradient-to-b from-rose-50/70 via-white to-rose-50/60 py-16 sm:py-20"
+      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-16 sm:py-20"
     >
       <div className="mx-auto w-full max-w-2xl px-4 sm:px-6">
         <div className="rounded-xl border border-rose-100/70 bg-white/90 p-6 shadow-[0_35px_60px_-15px_rgba(244,114,182,0.15)] backdrop-blur">
@@ -103,7 +118,7 @@ export default function RsvpFormSection() {
                 id="rsvp-name"
                 placeholder={placeholders.name}
                 value={formValues.name}
-                onChange={(event) => updateField("name", event.target.value)}
+                onChange={(event) => updateField('name', event.target.value)}
                 className="h-12 rounded-xl border-rose-100/90 bg-white/90 text-sm text-slate-700 placeholder:text-slate-400 focus-visible:border-rose-200 focus-visible:ring-rose-200/50"
                 autoComplete="name"
                 required
@@ -121,7 +136,7 @@ export default function RsvpFormSection() {
                 id="rsvp-message"
                 placeholder={placeholders.message}
                 value={formValues.message}
-                onChange={(event) => updateField("message", event.target.value)}
+                onChange={(event) => updateField('message', event.target.value)}
                 className="min-h-[120px] rounded-xl border-rose-100/90 bg-white/90 text-sm text-slate-700 placeholder:text-slate-400 focus-visible:border-rose-200 focus-visible:ring-rose-200/50"
               />
             </div>
@@ -133,7 +148,7 @@ export default function RsvpFormSection() {
                 </span>
                 <Select
                   value={formValues.attendance}
-                  onValueChange={(value) => updateField("attendance", value)}
+                  onValueChange={(value) => updateField('attendance', value)}
                 >
                   <SelectTrigger className="h-12 rounded-xl border-rose-100/90 bg-white/90 text-left text-sm text-slate-700 placeholder:text-slate-400 focus:ring-rose-200/50">
                     <SelectValue placeholder={placeholders.attendance} />
@@ -158,7 +173,7 @@ export default function RsvpFormSection() {
                 </span>
                 <Select
                   value={formValues.guests}
-                  onValueChange={(value) => updateField("guests", value)}
+                  onValueChange={(value) => updateField('guests', value)}
                 >
                   <SelectTrigger className="h-12 rounded-xl border-rose-100/90 bg-white/90 text-left text-sm text-slate-700 placeholder:text-slate-400 focus:ring-rose-200/50">
                     <SelectValue placeholder={placeholders.guests} />
@@ -196,16 +211,58 @@ export default function RsvpFormSection() {
                     GỬI QUÀ MỪNG CƯỚI
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="rounded-2xl border-rose-100 bg-white/95">
-                  <DialogHeader className="space-y-2 text-center">
-                    <DialogTitle className="font-serif text-2xl text-slate-800">
-                      Tính năng đang phát triển
-                    </DialogTitle>
-                    <DialogDescription className="text-base text-muted-foreground">
-                      Tính năng này đang phát triển. Chúng mình sẽ sớm mở gửi
-                      quà trực tuyến nhé!
-                    </DialogDescription>
-                  </DialogHeader>
+                <DialogContent className="w-full max-w-md overflow-hidden rounded-3xl border border-rose-100/80 bg-white/95 p-0 shadow-[0_38px_80px_-38px_rgba(244,114,182,0.85)]">
+                  <div className="relative h-64 w-full sm:h-72">
+                    <Image
+                      src={giftInfo.heroImage}
+                      alt="Hình cưới của cô dâu chú rể"
+                      fill
+                      sizes="(max-width: 767px) 100vw, 480px"
+                      className="object-cover"
+                      priority={false}
+                      unoptimized
+                    />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-white via-white/40 to-transparent" />
+                  </div>
+                  <div className="space-y-6 px-6 pb-8 pt-6">
+                    <DialogHeader className="space-y-2 text-center">
+                      <p className="text-xs font-semibold uppercase tracking-[0.5em] text-rose-300">
+                        Gửi quà mừng cưới
+                      </p>
+                      <DialogDescription className="text-sm text-muted-foreground">
+                        Quét mã bên dưới để gửi lời chúc và món quà yêu thương tới tụi mình.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="rounded-2xl border border-rose-100/80 bg-white/95 p-5 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.55)]">
+                      <div className="mx-auto w-40 max-w-full sm:w-48">
+                        <div className="relative my-1 aspect-square">
+                          <Image
+                            src={giftInfo.qrImage}
+                            alt="Mã QR Techcombank Trần Thị Ngọc Yến"
+                            fill
+                            sizes="(max-width: 767px) 75vw, 320px"
+                            className="object-contain"
+                            priority={false}
+                            unoptimized
+                          />
+                        </div>
+                      </div>
+                      {/* <div className="mt-4 space-y-1 text-center">
+                        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-rose-300">
+                          {giftInfo.bankName} - {giftInfo.bankCode}
+                        </p>
+                        <p className="text-lg font-semibold text-slate-800">
+                          {giftInfo.accountHolder}
+                        </p>
+                        <p className="text-xs font-medium uppercase tracking-[0.35em] text-slate-400">
+                          Số tài khoản
+                        </p>
+                        <p className="font-mono text-xl tracking-[0.35em] text-slate-900">
+                          {formattedAccountNumber}
+                        </p>
+                      </div> */}
+                    </div>
+                  </div>
                 </DialogContent>
               </Dialog>
             </div>

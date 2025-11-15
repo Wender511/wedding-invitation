@@ -20,8 +20,6 @@ const rawPhotos = [
     alt: "Close-up portrait of the bride indoors",
   },
   { fileName: "2O4A0125.jpg", alt: "Bride looking out the window" },
-  { fileName: "2O4A0174.jpg", alt: "Groom adjusting his suit jacket" },
-  { fileName: "2O4A0200.jpg", alt: "Bride smiling while holding flowers" },
   { fileName: "2O4A0269.jpg", alt: "Couple embracing by the stairs" },
   { fileName: "2O4A0303.jpg", alt: "Couple sharing a drink outdoors" },
   { fileName: "2O4A9844.jpg", alt: "Bride lounging on a vintage sofa" },

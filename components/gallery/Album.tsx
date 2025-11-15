@@ -28,8 +28,7 @@ import "swiper/css/thumbs";
 import { photos } from "@/data/photos";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-
-const MAIN_RATIO = "aspect-[3/4]";
+const MAIN_RATIO = 'aspect-[1]';
 
 export default function Album() {
   const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
@@ -83,12 +82,12 @@ export default function Album() {
     <section
       id="album-gallery"
       data-scroll-section="true"
-      className="mx-auto flex h-dvh w-full max-w-3xl items-center sm:px-6"
+      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[80dvh] md:h-dvh snap-start"
     >
-      <div className="flex w-full flex-col gap-6 h-full">
+      <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-3 md:gap-3 px-6 md:px-10 h-full">
         <div
           className={cn(
-            "relative w-full overflow-hidden rounded-2xl bg-neutral-900/40",
+            'relative w-full overflow-hidden rounded-2xl bg-neutral-900/40 h-full',
             MAIN_RATIO
           )}
         >
@@ -107,7 +106,7 @@ export default function Album() {
             grabCursor
             style={
               {
-                "--swiper-navigation-color": "#ffffff",
+                '--swiper-navigation-color': '#ffffff'
               } as CSSProperties
             }
           >
@@ -117,17 +116,11 @@ export default function Album() {
                   role="button"
                   tabIndex={0}
                   onClick={() => openModalAt(index)}
-                  onKeyDown={(event) =>
-                    handleKeyActivate(event, () => openModalAt(index))
-                  }
+                  onKeyDown={(event) => handleKeyActivate(event, () => openModalAt(index))}
                   className="block h-full w-full cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                   aria-label={`Phóng to ảnh ${index + 1}`}
                 >
-                  <div
-                    className={cn(
-                      "relative h-full w-full overflow-hidden rounded-2xl"
-                    )}
-                  >
+                  <div className={cn('relative h-full w-full overflow-hidden rounded-2xl')}>
                     <Image
                       src={photo.src}
                       alt={photo.alt}
@@ -135,7 +128,6 @@ export default function Album() {
                       sizes="(max-width: 768px) 92vw, 720px"
                       className="object-cover object-center"
                       priority={index === 0}
-
                     />
                   </div>
                 </div>
@@ -143,9 +135,6 @@ export default function Album() {
             ))}
           </Swiper>
         </div>
-
-        <div style={{ height: 4 }} />
-
         <div className="relative w-full">
           <Swiper
             modules={[Navigation, Thumbs, Keyboard]}
@@ -158,7 +147,7 @@ export default function Album() {
             keyboard={{ enabled: true }}
             breakpoints={{
               0: { spaceBetween: 10 },
-              768: { spaceBetween: 12 },
+              768: { spaceBetween: 12 }
             }}
             allowTouchMove
             grabCursor
@@ -166,30 +155,26 @@ export default function Album() {
             {photos.map((photo, index) => (
               <SwiperSlide
                 key={`thumb-${photo.id}`}
-                className="!h-auto !w-auto"
-                style={{ width: 96 }}
+                className="h-auto! w-auto!"
               >
                 <div
                   role="button"
                   tabIndex={0}
                   onClick={() => handleThumbClick(index)}
-                  onKeyDown={(event) =>
-                    handleKeyActivate(event, () => handleThumbClick(index))
-                  }
+                  onKeyDown={(event) => handleKeyActivate(event, () => handleThumbClick(index))}
                   className={cn(
-                    "block cursor-pointer overflow-hidden rounded-xl border-2 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70",
+                    'block cursor-pointer overflow-hidden rounded-xl border-2 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70',
                     activeIndex === index
-                      ? "border-white shadow-[0_0_0_2px_rgba(255,255,255,0.25)]"
-                      : "border-transparent hover:border-white/70"
+                      ? 'border-white shadow-[0_0_0_2px_rgba(255,255,255,0.25)]'
+                      : 'border-transparent hover:border-white/70'
                   )}
                   aria-label={`Chọn ảnh ${index + 1}`}
                 >
-                  <div className="relative aspect-square w-24">
+                  <div className="relative aspect-square w-18 md:w-24">
                     <Image
                       src={photo.src}
                       alt={photo.alt}
                       fill
-                      sizes="96px"
                       className="object-cover object-center rounded-xl"
                     />
                   </div>
@@ -200,15 +185,10 @@ export default function Album() {
         </div>
       </div>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}  >
         <DialogContent className="border-none bg-transparent p-0 shadow-none">
           <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center gap-4">
-            <div
-              className={cn(
-                "relative w-full overflow-hidden rounded-2xl",
-                MAIN_RATIO
-              )}
-            >
+            <div className={cn('relative w-full overflow-hidden rounded-2xl', MAIN_RATIO)}>
               <Image
                 src={photos[modalIndex].src}
                 alt={photos[modalIndex].alt}
@@ -217,10 +197,6 @@ export default function Album() {
                 className="object-cover object-center"
               />
             </div>
-
-            <p className="text-center text-sm text-white/80">
-              {photos[modalIndex].alt}
-            </p>
 
             <button
               type="button"

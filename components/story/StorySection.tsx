@@ -114,11 +114,11 @@ export default function StorySection() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.3 }}
-      className="bg-white min-h-dvh snap-start py-12"
+      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 min-h-dvh snap-start "
     >
       <motion.div
         variants={containerVariants}
-        className="mx-auto flex w-full max-w-5xl flex-col items-center gap-14 px-6 md:gap-16 md:px-12"
+        className="mx-auto flex w-full flex-col items-center gap-10 md:gap-12 px-6 md:px-10 max-w-4xl"
       >
         <motion.div variants={textVariants} className="max-w-4xl text-center">
           <p className="font-sans text-base font-light leading-relaxed text-neutral-600 md:text-lg text-justify">
@@ -129,7 +129,7 @@ export default function StorySection() {
           </p>
         </motion.div>
 
-        <motion.div ref={imageRef} variants={imageVariants} className="w-full max-w-3xl">
+        <motion.div ref={imageRef} variants={imageVariants} className="w-full max-w-4xl">
           <motion.div
             style={parallaxStyle}
             className="overflow-hidden rounded-4xl border border-neutral-100/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.1)]"
@@ -178,11 +178,11 @@ export default function StorySection() {
               <div className="mt-4 flex flex-col space-y-2 sm:mt-6 sm:space-y-3">
                 {family.members.map((member) => {
                   const memberClasses = [
-                    "text-[0.65rem] font-light uppercase tracking-[0.14em] text-neutral-500 sm:text-xs md:text-base",
-                    family.isBride ? "mt-auto sm:mt-0" : "",
+                    'text-[0.65rem] font-light uppercase tracking-[0.14em] text-neutral-500 sm:text-xs md:text-base',
+                    family.isBride ? 'mt-auto sm:mt-0' : ''
                   ]
                     .filter(Boolean)
-                    .join(" ");
+                    .join(' ');
 
                   return (
                     <p key={member} className={memberClasses}>

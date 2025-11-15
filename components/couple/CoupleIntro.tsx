@@ -98,11 +98,11 @@ export default function CoupleIntro() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.35 }}
-      className="bg-white py-12 md:py-10 min-h-dvh snap-start"
+      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 min-h-dvh snap-start"
     >
       <motion.div
         variants={containerVariants}
-        className="mx-auto flex w-full max-w-4xl flex-col items-center gap-10 px-6 md:gap-12 md:px-10"
+        className="mx-auto flex w-full max-w-4xl flex-col items-center gap-8 md:gap-10 px-6 md:px-10"
       >
         <motion.div
           variants={textVariants}
