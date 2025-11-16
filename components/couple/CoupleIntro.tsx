@@ -30,17 +30,19 @@ import { useMotionPresets } from "@/hooks/useMotionPresets";
 // } as const;
 
 export default function CoupleIntro() {
-  const { container, fadeIn, viewport } = useMotionPresets();
+  const { container, viewport, slideFade, scaleIn } = useMotionPresets();
 
   const containerVariants = container({ offset: 0, duration: 0.5, staggerChildren: 0.15 });
-  const textVariants = fadeIn({ offset: 24, duration: 0.7 });
+  const headingVariants = slideFade({ direction: "up", offset: 22, duration: 0.65 });
+  const introVariants = scaleIn({ initialScale: 0.94, duration: 0.65, delay: 0.05 });
   const cardsContainerVariants = container({
     offset: 24,
     duration: 0.7,
     delayChildren: 0.1,
     staggerChildren: 0.12,
   });
-  const cardVariants = fadeIn({ offset: 18, duration: 0.6 });
+  const groomCardVariants = slideFade({ direction: "left", offset: 26, duration: 0.65 });
+  const brideCardVariants = slideFade({ direction: "right", offset: 26, duration: 0.65 });
 
   return (
     <motion.section
@@ -56,7 +58,7 @@ export default function CoupleIntro() {
         className="mx-auto flex w-full max-w-4xl flex-col items-center gap-8 md:gap-10 px-6 md:px-10"
       >
         <motion.div
-          variants={textVariants}
+          variants={headingVariants}
           className="flex flex-col items-center gap-2 text-center"
         >
           <p className="font-serif text-[0.7rem] uppercase tracking-[0.4em] text-neutral-500 md:text-xs">
@@ -68,7 +70,7 @@ export default function CoupleIntro() {
         </motion.div>
 
         <motion.div
-          variants={textVariants}
+          variants={introVariants}
           className="flex flex-col items-center gap-5 text-center"
         >
           <div className="h-8 w-px bg-neutral-300" />
@@ -85,7 +87,7 @@ export default function CoupleIntro() {
           className="grid w-full grid-cols-2 gap-4 sm:gap-6 md:gap-12"
         >
           <motion.article
-            variants={cardVariants}
+            variants={groomCardVariants}
             className="flex flex-col overflow-hidden rounded-3xl"
             // style={{ rotate: groomRotation }}
             // {...getHoverProps(groomRotation)}
@@ -125,7 +127,7 @@ export default function CoupleIntro() {
           </motion.article>
 
           <motion.article
-            variants={cardVariants}
+            variants={brideCardVariants}
             className="flex flex-col overflow-hidden rounded-3xl"
             // style={{ rotate: brideRotation }}
             // {...getHoverProps(brideRotation)}

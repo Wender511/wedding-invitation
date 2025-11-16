@@ -242,7 +242,7 @@ export default function RsvpFormSection() {
                 {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
                 <span>Gửi lời nhắn cho dâu rể</span>
               </Button>
-              <Dialog>
+              <Dialog >
                 <DialogTrigger asChild>
                   <Button
                     type="button"
@@ -253,7 +253,7 @@ export default function RsvpFormSection() {
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="w-full max-w-md overflow-hidden rounded-3xl border border-rose-100/80 bg-white/95 p-0 shadow-[0_38px_80px_-38px_rgba(244,114,182,0.85)]">
-                  <div className="relative h-64 w-full sm:h-72">
+                  <div className="relative h-64 w-full sm:h-60">
                     <Image
                       src={giftInfo.heroImage}
                       alt="Hình cưới của cô dâu chú rể"

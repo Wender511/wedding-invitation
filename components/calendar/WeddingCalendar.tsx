@@ -14,9 +14,9 @@ const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"] as const;
 const daysInMonth = Array.from({ length: 31 }, (_, index) => index + 1);
 
 export default function WeddingCalendar() {
-  const { container, viewport, prefersReducedMotion, baseTransition } = useMotionPresets();
+  const { viewport, prefersReducedMotion, baseTransition, slideFade } = useMotionPresets();
 
-  const containerVariants = container({ offset: 32, duration: 0.65, when: "beforeChildren" });
+  const sectionVariants = slideFade({ direction: "up", offset: 36, duration: 0.7 });
 
   const dayVariants = {
     hidden: {
@@ -40,7 +40,7 @@ export default function WeddingCalendar() {
       initial="hidden"
       whileInView="show"
       viewport={viewport}
-      variants={containerVariants}
+      variants={sectionVariants}
       className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[100dvh] md:h-dvh snap-start"
     >
       <div className="mx-auto flex w-full flex-col items-center gap-10 md:gap-12 px-6 md:px-10 max-w-4xl h-full">

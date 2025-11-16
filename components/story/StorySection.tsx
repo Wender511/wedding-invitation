@@ -8,8 +8,8 @@ import { useMotionPresets } from "@/hooks/useMotionPresets";
 
 const copy = {
   story: {
-    vi: 'Chúng tôi gặp nhau bằng những lời thách thức ngây ngô của tuổi trẻ, khi cả hai còn khoác trên mình bộ đồng phục học sinh. Khi ấy, chẳng ai nghĩ rằng giữa những câu nói đùa ấy lại bắt đầu một hành trình dài đến thế. Từ những ngày chỉ là bạn, chưa có chút tình cảm, rồi dần học cách quan tâm, thấu hiểu và cùng nhau vượt qua mọi khó khăn. Từ tà áo dài năm ấy đến váy cưới hôm nay — 5 năm không quá dài, nhưng đủ để chúng tôi nhận ra: hạnh phúc đôi khi bắt đầu từ những điều rất giản dị — một ánh nhìn, một câu nói, hay chỉ là… một lời nói đùa ngày hôm ấy ',
-    cz: 'We met through the playful challenges of youth, back when we were still wearing our school uniforms. No one could have imagined that behind those lighthearted jokes would begin such a long and beautiful journey. From the days when we were just friends — no feelings, no promises — to the moments we learned to care, to understand, and to walk together through every joy and hardship. From the white áo dài — the Vietnamese school dress — to today’s wedding gown, five years may not be long, but it has been enough for us to realize that happiness often begins with the simplest things — a glance, a word… or just a teasing joke on that very first day.'
+    vi: 'Chúng tôi gặp nhau bằng những lời thách thức ngây ngô của tuổi trẻ. Từ những ngày chỉ là bạn, chưa có chút tình cảm, rồi dần học cách quan tâm, thấu hiểu và cùng nhau vượt qua mọi khó khăn. Từ tà áo dài năm ấy đến váy cưới hôm nay — 5 năm không quá dài, nhưng đủ để chúng tôi nhận ra: hạnh phúc đôi khi bắt đầu từ những điều rất giản dị — một ánh nhìn, một câu nói, hay chỉ là… một lời nói đùa ngày hôm ấy ',
+    cz: 'We met through the playful challenges of youth. From the days when we were just friends — no feelings, no promises — to the moments we learned to care, to understand, and to walk together through every joy and hardship. From the white áo dài — the Vietnamese school dress — to today’s wedding gown, five years may not be long, but it has been enough for us to realize that happiness often begins with the simplest things — a glance, a word… or just a teasing joke on that very first day.'
   },
   families: [
     {
@@ -28,7 +28,14 @@ const copy = {
 } as const;
 
 export default function StorySection() {
-  const { fadeIn, container, viewport, prefersReducedMotion } = useMotionPresets();
+  const {
+    fadeIn,
+    container,
+    viewport,
+    prefersReducedMotion,
+    slideFade,
+    spinIn,
+  } = useMotionPresets();
   const imageRef = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({
@@ -45,10 +52,12 @@ export default function StorySection() {
   const parallaxStyle = prefersReducedMotion ? undefined : { y: imageParallax };
 
   const containerVariants = container({ offset: 0, duration: 0.6, staggerChildren: 0.18 });
-  const textVariants = fadeIn({ offset: 24, duration: 0.7 });
-  const imageVariants = fadeIn({ offset: 28, duration: 0.75, delay: 0.1 });
-  const familiesVariants = container({ offset: 28, duration: 0.8, staggerChildren: 0.16 });
-  const familyCardVariants = fadeIn({ offset: 24, duration: 0.65 });
+  const textVariants = slideFade({ direction: "up", offset: 28, duration: 0.3 });
+  const imageFrameVariants = fadeIn({ offset: 12, duration: 0.7, delay: 0.05 });
+  const imageSpinVariants = spinIn({ rotate: -14, initialScale: 0.9, duration: 0.85, delay: 0.08 });
+  const familiesVariants = container({ offset: 20, duration: 0.8, staggerChildren: 0.18 });
+  const familyLeftVariants = slideFade({ direction: "left", offset: 24, duration: 0.65 });
+  const familyRightVariants = slideFade({ direction: "right", offset: 24, duration: 0.65 });
 
   return (
     <motion.section
@@ -72,8 +81,9 @@ export default function StorySection() {
           </p>
         </motion.div>
 
-        <motion.div ref={imageRef} variants={imageVariants} className="w-full max-w-4xl">
+        <motion.div ref={imageRef} variants={imageFrameVariants} className="w-full max-w-4xl">
           <motion.div
+            variants={imageSpinVariants}
             style={parallaxStyle}
             className="overflow-hidden rounded-4xl border border-neutral-100/70 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.1)]"
           >
@@ -109,7 +119,7 @@ export default function StorySection() {
           {copy.families.map((family) => (
             <motion.article
               key={family.title}
-              variants={familyCardVariants}
+              variants={family.isBride ? familyRightVariants : familyLeftVariants}
               className="flex flex-col items-center rounded-3xl bg-white/70 px-0 py-6 shadow-[0_18px_38px_rgba(15,23,42,0.08)] ring-1 ring-neutral-100 sm:px-6 sm:py-8 md:rounded-[1.75rem] md:px-10 md:py-12"
             >
               <p className="font-serif text-sm uppercase tracking-[0.36em] text-neutral-800 sm:text-base md:text-xl">

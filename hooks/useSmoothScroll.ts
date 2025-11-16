@@ -2,6 +2,16 @@
 
 import { useCallback } from "react";
 
+type LenisInstance = {
+  scrollTo?: (
+    target: Element,
+    options?: {
+      duration?: number;
+      easing?: (value: number) => number;
+    }
+  ) => void;
+};
+
 export function useSmoothScroll() {
   const scrollTo = useCallback((target: string | Element) => {
     let element: Element | null = null;
@@ -15,7 +25,7 @@ export function useSmoothScroll() {
     if (!element) return;
 
     // Check if Lenis is available globally
-    const lenis = (window as any).lenis;
+    const lenis = (window as Window & { lenis?: LenisInstance }).lenis;
     
     if (lenis && typeof lenis.scrollTo === 'function') {
       // Use Lenis for smooth scroll

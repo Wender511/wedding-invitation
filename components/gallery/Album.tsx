@@ -92,10 +92,10 @@ export default function Album() {
     []
   );
 
-  const { container, fadeIn, viewport } = useMotionPresets();
+  const { container, viewport, scaleIn, slideFade } = useMotionPresets();
   const galleryVariants = container({ offset: 24, duration: 0.6, staggerChildren: 0.12 });
-  const mainCarouselVariants = fadeIn({ offset: 32 });
-  const thumbVariants = fadeIn({ offset: 24, delay: 0.1 });
+  const mainCarouselVariants = scaleIn({ initialScale: 0.92, duration: 0.6 });
+  const thumbVariants = slideFade({ direction: "up", offset: 20, delay: 0.1, duration: 0.55 });
 
   useEffect(() => {
     if (typeof window === "undefined") {

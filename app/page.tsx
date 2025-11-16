@@ -24,7 +24,7 @@ export default function Home() {
       // smoothWheel: true,
       syncTouch: true,
       // syncTouchLerp: 0.5,
-      touchInertiaMultiplier: 12,
+      touchInertiaMultiplier: 16,
       // lerp: 0.2,
       // touchMultiplier:1
     });

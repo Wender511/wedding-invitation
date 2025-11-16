@@ -106,11 +106,14 @@ function CrestIcon({ className }: { className?: string }) {
 }
 
 export default function VenueSection() {
-  const { container, fadeIn, viewport } = useMotionPresets();
+  const { container, viewport, slideFade, scaleIn, spinIn } = useMotionPresets();
 
   const containerVariants = container({ offset: 32, duration: 0.7, staggerChildren: 0.16 });
-  const crestVariants = fadeIn({ offset: 18, duration: 0.7 });
-  const itemVariants = fadeIn({ offset: 24, duration: 0.65 });
+  const crestVariants = spinIn({ rotate: 20, initialScale: 0.85, duration: 0.75 });
+  const subtitleVariants = slideFade({ direction: "up", offset: 18, duration: 0.6 });
+  const locationVariants = slideFade({ direction: "up", offset: 22, duration: 0.65, delay: 0.05 });
+  const scheduleVariants = slideFade({ direction: "up", offset: 26, duration: 0.65, delay: 0.1 });
+  const ctaVariants = scaleIn({ initialScale: 0.92, duration: 0.6, delay: 0.15 });
 
   return (
     <motion.section
@@ -140,7 +143,7 @@ export default function VenueSection() {
           </motion.div>
 
           <motion.p
-            variants={itemVariants}
+            variants={subtitleVariants}
             className="mt-8 text-[0.7rem] uppercase tracking-[0.45em] text-neutral-400 md:mt-10 md:text-xs"
           >
             {/* Được tổ chức tại – Hosted at */}
@@ -148,25 +151,25 @@ export default function VenueSection() {
           </motion.p>
 
           <motion.h2
-            variants={itemVariants}
+            variants={locationVariants}
             className="mt-4 font-script text-3xl text-neutral-700 md:mt-5 md:text-4xl"
           >
             {/* Lo Ren Street */}
             Đường Lò Rèn
           </motion.h2>
           <motion.h2
-            variants={itemVariants}
+            variants={locationVariants}
             className="font-script text-3xl text-neutral-700 md:mt-5 md:text-4xl"
           >
             {/* Minh Thanh Commune */}
             Xã Minh Thạnh
           </motion.h2>
-          <motion.p variants={itemVariants} className="mt-2 text-base text-neutral-600 md:text-lg">
+          <motion.p variants={locationVariants} className="mt-2 text-base text-neutral-600 md:text-lg">
             TP. Hồ Chí Minh
           </motion.p>
 
           <motion.div
-            variants={itemVariants}
+            variants={scheduleVariants}
             className="mt-5 flex flex-col items-center gap-3 md:mt-12"
           >
             <p className="text-[0.7rem] uppercase tracking-[0.4em] text-neutral-400 md:text-xs">
@@ -183,7 +186,7 @@ export default function VenueSection() {
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="mt-5 md:mt-12">
+          <motion.div variants={ctaVariants} className="mt-5 md:mt-12">
             <Button
               asChild
               variant="outline"
