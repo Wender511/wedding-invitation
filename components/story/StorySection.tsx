@@ -52,7 +52,7 @@ export default function StorySection() {
   const parallaxStyle = prefersReducedMotion ? undefined : { y: imageParallax };
 
   const containerVariants = container({ offset: 0, duration: 0.6, staggerChildren: 0.18 });
-  const textVariants = slideFade({ direction: "up", offset: 28, duration: 0.3 });
+  const textVariants = slideFade({ direction: "up", offset: 28, duration: 0.7 });
   const imageFrameVariants = fadeIn({ offset: 12, duration: 0.7, delay: 0.05 });
   const imageSpinVariants = spinIn({ rotate: -14, initialScale: 0.9, duration: 0.85, delay: 0.08 });
   const familiesVariants = container({ offset: 20, duration: 0.8, staggerChildren: 0.18 });

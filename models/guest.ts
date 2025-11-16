@@ -10,6 +10,7 @@ export type AttendanceStatus = "coming" | "not-coming";
 
 export interface GuestBase {
   name: string;
+  phone: string;
   message: string;
   attendance: AttendanceStatus;
   guests: number;
@@ -21,6 +22,7 @@ export type GuestDocument = WithId<GuestBase>;
 
 export interface GuestInput {
   name: string;
+  phone: string;
   message?: string;
   attendance: AttendanceStatus;
   guests?: number;
@@ -52,6 +54,7 @@ function buildGuestDocument(input: GuestInput): Omit<GuestDocument, "_id"> {
 
   return {
     name: input.name,
+    phone: input.phone.trim(),
     message: input.message ?? "",
     attendance: input.attendance,
     guests: normalizeGuestCount(input),

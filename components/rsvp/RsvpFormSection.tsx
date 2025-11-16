@@ -25,6 +25,7 @@ import Image from "next/image";
 
 type RsvpFormValues = {
   name: string;
+  phone: string;
   message: string;
   attendance: string;
   guests: string;
@@ -42,6 +43,7 @@ const guestOptions = [
 ] as const;
 const initialValues: RsvpFormValues = {
   name: "",
+  phone: "",
   message: "",
   attendance: "",
   guests: "",
@@ -64,6 +66,7 @@ export default function RsvpFormSection() {
   const placeholders = useMemo(
     () => ({
       name: "Nhập tên của bạn",
+      phone: "Số điện thoại liên hệ",
       message: "Lời nhắn đến cô dâu chú rể…",
       attendance: "Bạn sẽ đến chứ",
       guests: "Số người tham dự",
@@ -73,18 +76,19 @@ export default function RsvpFormSection() {
   const showGuestSelect = formValues.attendance !== "not-coming";
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const trimmedPhone = formValues.phone.trim();
+    if (!trimmedPhone) {
+      toast.error("Bạn vui lòng cho tụi mình xin số điện thoại nhé.");
+      return;
+    }
     if (!formValues.attendance) {
-      toast.error('Bạn chưa cho tụi mình biết là có đến dự không đó 😊');
+      toast.error('Bạn có đến dự hay không? Hãy cho tụi mình biết nhé!😊');
       return;
     }
     const requiresGuestCount = formValues.attendance === "coming";
     const guestCount = requiresGuestCount ? Number(formValues.guests) : 0;
     if (requiresGuestCount && !formValues.guests) {
       toast.error('Bạn vui lòng chọn số lượng khách đi cùng nhé.');
-      return;
-    }
-    if (requiresGuestCount && (!Number.isFinite(guestCount) || guestCount <= 0)) {
-     toast.error('Số lượng khách không hợp lệ. Vui lòng thử lại.');
       return;
     }
     setIsSubmitting(true);
@@ -96,6 +100,7 @@ export default function RsvpFormSection() {
         },
         body: JSON.stringify({
           name: formValues.name.trim(),
+          phone: trimmedPhone,
           message: formValues.message.trim(),
           attendance: formValues.attendance,
           guests: guestCount,
@@ -104,9 +109,9 @@ export default function RsvpFormSection() {
       await response.json().catch(() => null);
       setFormValues(initialValues);
       formValues.attendance === 'coming'
-        ? toast.success('Cảm ơn bạn đã gửi lời nhắn. Hẹn gặp lại tại đám cưới nhé!')
+        ? toast.success('Cảm ơn bạn đã gửi lời nhắn. Hẹn gặp bạn tại lễ cưới nhé!')
         : toast.success(
-            'Cảm ơn bạn đã phản hồi! Rất tiếc bạn không thể đến dự cùng chúng mình. Hẹn gặp bạn vào dịp khác nhé!'
+            'Mình cũng rất tiếc khi bạn không thể đến chung vui cùng chúng mình. Hẹn gặp bạn vào dịp khác nhé! '
           );
     } catch (error) {
       console.error("RSVP_FORM_SUBMIT_ERROR", error);
@@ -163,6 +168,24 @@ export default function RsvpFormSection() {
                 autoComplete="name"
                 required
 
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                htmlFor="rsvp-phone"
+                className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-200"
+              >
+                Số điện thoại
+              </label>
+              <Input
+                id="rsvp-phone"
+                type="tel"
+                placeholder={placeholders.phone}
+                value={formValues.phone}
+                onChange={(event) => updateField("phone", event.target.value)}
+                className="h-12 rounded-xl border-rose-100/90 bg-white/90 text-sm text-slate-700 placeholder:text-slate-400 focus-visible:border-rose-200 focus-visible:ring-rose-200/50"
+                autoComplete="tel"
+                required
               />
             </div>
             <div className="space-y-2">
@@ -261,7 +284,7 @@ export default function RsvpFormSection() {
                       sizes="(max-width: 767px) 100vw, 480px"
                       className="object-cover"
                       priority={false}
-                      unoptimized
+                      // unoptimized
                     />
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-white via-white/40 to-transparent" />
                   </div>
@@ -271,7 +294,7 @@ export default function RsvpFormSection() {
                         Gửi quà mừng cưới
                       </p>
                       <DialogDescription className="text-sm text-muted-foreground">
-                        Quét mã bên dưới để gửi lời chúc và món quà yêu thương tới tụi mình.
+                        Cảm ơn bạn đã gửi lời chúc và món quà yêu thương tới tụi mình.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="rounded-2xl border border-rose-100/80 bg-white/95 p-5 shadow-[0_25px_60px_-30px_rgba(15,23,42,0.55)]">

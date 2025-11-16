@@ -6,9 +6,40 @@ import Guest from "@/models/guest";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const phone =
+      typeof body.phone === "string" ? body.phone.trim() : "";
+
+    if (!phone) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Số điện thoại không được để trống.",
+        },
+        { status: 400 }
+      );
+    }
+    if (!/^\d+$/.test(phone)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Số điện thoại chỉ chứa chữ số.",
+        },
+        { status: 400 }
+      );
+    }
+    if (phone.length < 10 || phone.length > 11) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Số điện thoại phải gồm 10 hoặc 11 chữ số.",
+        },
+        { status: 400 }
+      );
+    }
 
     const guest = await Guest.create({
       name: body.name,
+      phone,
       message: typeof body.message === "string" ? body.message : "",
       attendance: body.attendance,
       guests:
