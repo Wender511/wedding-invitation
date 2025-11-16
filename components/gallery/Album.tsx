@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useEffect,
   useMemo,
   useState,
   type CSSProperties,
@@ -9,6 +10,7 @@ import {
 } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 import {
   Autoplay,
   EffectFade,
@@ -25,9 +27,10 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-import { photos } from "@/data/photos";
+import { albumPhotos } from "@/data/photos";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useMotionPresets } from "@/hooks/useMotionPresets";
 const MAIN_RATIO = 'aspect-[1]';
 
 export default function Album() {
@@ -36,24 +39,35 @@ export default function Album() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState(0);
+  const [isDesktopView, setIsDesktopView] = useState(false);
 
   const safeThumbsSwiper = useMemo(
     () => (thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null),
     [thumbsSwiper]
   );
 
-  const openModalAt = useCallback((index: number) => {
-    setModalIndex(index);
-    setIsDialogOpen(true);
-  }, []);
+  const detailPhotos = albumPhotos.detail;
+  const detailCount = detailPhotos.length;
+  const openModalAt = useCallback(
+    (index: number) => {
+      if (!detailCount) return;
+      setModalIndex(index % detailCount);
+      setIsDialogOpen(true);
+    },
+    [detailCount]
+  );
 
   const showPrevModal = useCallback(() => {
-    setModalIndex((prev) => (prev - 1 + photos.length) % photos.length);
-  }, []);
+    if (!detailCount) return;
+    setModalIndex((prev) => (prev - 1 + detailCount) % detailCount);
+  }, [detailCount]);
 
   const showNextModal = useCallback(() => {
-    setModalIndex((prev) => (prev + 1) % photos.length);
-  }, []);
+    if (!detailCount) return;
+    setModalIndex((prev) => (prev + 1) % detailCount);
+  }, [detailCount]);
+
+  const displayPhotos = isDesktopView ? albumPhotos.desktop : albumPhotos.mobile;
 
   const handleThumbClick = useCallback(
     (index: number) => {
@@ -78,14 +92,46 @@ export default function Album() {
     []
   );
 
+  const { container, fadeIn, viewport } = useMotionPresets();
+  const galleryVariants = container({ offset: 24, duration: 0.6, staggerChildren: 0.12 });
+  const mainCarouselVariants = fadeIn({ offset: 32 });
+  const thumbVariants = fadeIn({ offset: 24, delay: 0.1 });
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateMatches = (event: MediaQueryList | MediaQueryListEvent) => {
+      setIsDesktopView(event.matches);
+    };
+    updateMatches(mediaQuery);
+
+    const listener = (event: MediaQueryListEvent) => updateMatches(event);
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", listener);
+      return () => mediaQuery.removeEventListener("change", listener);
+    }
+
+    mediaQuery.addListener(listener);
+    return () => mediaQuery.removeListener(listener);
+  }, []);
+
   return (
-    <section
+    <motion.section
       id="album-gallery"
       data-scroll-section="true"
+      initial="hidden"
+      whileInView="show"
+      viewport={viewport}
       className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[80dvh] md:h-dvh snap-start"
     >
-      <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-3 md:gap-3 px-6 md:px-10 h-full">
-        <div
+      <motion.div
+        variants={galleryVariants}
+        className="mx-auto flex w-full max-w-4xl flex-col items-center gap-3 md:gap-3 px-6 md:px-10 h-full"
+      >
+        <motion.div
+          variants={mainCarouselVariants}
           className={cn(
             'relative w-full overflow-hidden rounded-2xl bg-neutral-900/40 h-full',
             MAIN_RATIO
@@ -110,7 +156,7 @@ export default function Album() {
               } as CSSProperties
             }
           >
-            {photos.map((photo, index) => (
+            {displayPhotos.map((photo, index) => (
               <SwiperSlide key={photo.id} className="flex">
                 <div
                   role="button"
@@ -134,8 +180,8 @@ export default function Album() {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
-        <div className="relative w-full">
+        </motion.div>
+        <motion.div variants={thumbVariants} className="relative w-full">
           <Swiper
             modules={[Navigation, Thumbs, Keyboard]}
             onSwiper={setThumbsSwiper}
@@ -152,7 +198,7 @@ export default function Album() {
             allowTouchMove
             grabCursor
           >
-            {photos.map((photo, index) => (
+            {displayPhotos.map((photo, index) => (
               <SwiperSlide
                 key={`thumb-${photo.id}`}
                 className="h-auto! w-auto!"
@@ -182,21 +228,23 @@ export default function Album() {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}  >
         <DialogContent className="border-none bg-transparent p-0 shadow-none">
           <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center gap-4">
-            <div className={cn('relative w-full overflow-hidden rounded-2xl', MAIN_RATIO)}>
-              <Image
-                src={photos[modalIndex].src}
-                alt={photos[modalIndex].alt}
-                fill
-                sizes="(max-width: 768px) 90vw, 640px"
-                className="object-cover object-center"
-              />
-            </div>
+            {detailCount > 0 && (
+              <div className={cn('relative w-full overflow-hidden rounded-2xl', MAIN_RATIO)}>
+                <Image
+                  src={detailPhotos[modalIndex].src}
+                  alt={detailPhotos[modalIndex].alt}
+                  fill
+                  sizes="(max-width: 768px) 90vw, 640px"
+                  className="object-cover object-center"
+                />
+              </div>
+            )}
 
             <button
               type="button"
@@ -218,6 +266,6 @@ export default function Album() {
           </div>
         </DialogContent>
       </Dialog>
-    </section>
+    </motion.section>
   );
 }

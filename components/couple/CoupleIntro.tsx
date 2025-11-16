@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
-const ease = [0.16, 1, 0.3, 1] as const;
+import { useMotionPresets } from "@/hooks/useMotionPresets";
 // const copy = {
 //   heading: {
 //     primary: 'Thư mời tham dự lễ cưới',
@@ -30,66 +30,17 @@ const ease = [0.16, 1, 0.3, 1] as const;
 // } as const;
 
 export default function CoupleIntro() {
-  const prefersReducedMotion = useReducedMotion();
+  const { container, fadeIn, viewport } = useMotionPresets();
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.5,
-        ease,
-        staggerChildren: prefersReducedMotion ? 0 : 0.15,
-      },
-    },
-  };
-
-  const textVariants = {
-    hidden: {
-      opacity: 0,
-      y: prefersReducedMotion ? 0 : 24,
-    },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.7,
-        ease,
-      },
-    },
-  };
-
-  const cardsContainerVariants = {
-    hidden: {
-      opacity: 0,
-      y: prefersReducedMotion ? 0 : 24,
-    },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.7,
-        ease,
-        delayChildren: prefersReducedMotion ? 0 : 0.1,
-        staggerChildren: prefersReducedMotion ? 0 : 0.12,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: prefersReducedMotion ? 0 : 18,
-    },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.6,
-        ease,
-      },
-    },
-  };
+  const containerVariants = container({ offset: 0, duration: 0.5, staggerChildren: 0.15 });
+  const textVariants = fadeIn({ offset: 24, duration: 0.7 });
+  const cardsContainerVariants = container({
+    offset: 24,
+    duration: 0.7,
+    delayChildren: 0.1,
+    staggerChildren: 0.12,
+  });
+  const cardVariants = fadeIn({ offset: 18, duration: 0.6 });
 
   return (
     <motion.section
@@ -97,7 +48,7 @@ export default function CoupleIntro() {
       data-scroll-section="true"
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.35 }}
+      viewport={viewport}
       className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 min-h-dvh snap-start"
     >
       <motion.div

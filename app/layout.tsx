@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Great_Vibes, Cinzel, Noto_Serif, Platypi } from "next/font/google";
 import "./globals.css";
+import { AppToaster } from "@/components/ui/toaster";
 
 const headingFont = Cinzel({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default function RootLayout({
         className={`${headingFont.variable} ${bodyFont.variable} ${scriptFont.variable} font-body antialiased bg-linear-to-br from-cream-50 via-pink-50 to-neutral-50`}
       >
         {children}
+        <AppToaster />
       </body>
     </html>
   );

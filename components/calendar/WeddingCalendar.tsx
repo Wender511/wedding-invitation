@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
+
+import { useMotionPresets } from "@/hooks/useMotionPresets";
 
 const monthName = "December";
 const year = 2025;
@@ -11,25 +13,10 @@ const backgroundImage = '/2O4A9956.jpg';
 const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"] as const;
 const daysInMonth = Array.from({ length: 31 }, (_, index) => index + 1);
 
-const fadeEase = [0.22, 1, 0.36, 1] as const;
-
 export default function WeddingCalendar() {
-  const prefersReducedMotion = useReducedMotion();
+  const { container, viewport, prefersReducedMotion, baseTransition } = useMotionPresets();
 
-  const containerVariants = {
-    hidden: {
-      opacity: prefersReducedMotion ? 1 : 0,
-      y: prefersReducedMotion ? 0 : 32,
-    },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.65,
-        ease: fadeEase,
-      },
-    },
-  };
+  const containerVariants = container({ offset: 32, duration: 0.65, when: "beforeChildren" });
 
   const dayVariants = {
     hidden: {
@@ -40,8 +27,8 @@ export default function WeddingCalendar() {
       opacity: 1,
       y: 0,
       transition: {
+        ...baseTransition,
         duration: prefersReducedMotion ? 0 : 0.4,
-        ease: fadeEase,
         delay: prefersReducedMotion ? 0 : 0.2 + index * 0.02,
       },
     }),
@@ -52,7 +39,7 @@ export default function WeddingCalendar() {
       id="calendar"
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={viewport}
       variants={containerVariants}
       className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[100dvh] md:h-dvh snap-start"
     >

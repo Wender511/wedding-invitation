@@ -1,13 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { useMotionPresets } from '@/hooks/useMotionPresets';
 import { cn } from '@/lib/utils';
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 function CrestIcon({ className }: { className?: string }) {
   return (
@@ -107,39 +106,11 @@ function CrestIcon({ className }: { className?: string }) {
 }
 
 export default function VenueSection() {
-  const prefersReducedMotion = useReducedMotion();
+  const { container, fadeIn, viewport } = useMotionPresets();
 
-  const containerVariants = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 32 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.7,
-        ease,
-        when: 'beforeChildren',
-        staggerChildren: prefersReducedMotion ? 0 : 0.16
-      }
-    }
-  };
-
-  const crestVariants = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 18 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: prefersReducedMotion ? 0 : 0.7, ease }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 24 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: prefersReducedMotion ? 0 : 0.65, ease }
-    }
-  };
+  const containerVariants = container({ offset: 32, duration: 0.7, staggerChildren: 0.16 });
+  const crestVariants = fadeIn({ offset: 18, duration: 0.7 });
+  const itemVariants = fadeIn({ offset: 24, duration: 0.65 });
 
   return (
     <motion.section
@@ -147,7 +118,7 @@ export default function VenueSection() {
       data-scroll-section="true"
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={viewport}
       className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 snap-start "
     >
       <div className="mx-auto flex w-full flex-col items-center gap-10 md:gap-12 px-6 md:px-10 max-w-4xl">

@@ -4,6 +4,8 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+import { useMotionPresets } from "@/hooks/useMotionPresets";
+
 const stackedPhotos = [
   { src: "/2O4A9965.jpg", alt: "Bride holding bouquet" },
   { src: "/2O4A9956.jpg", alt: "Couple smiling together" },
@@ -13,6 +15,7 @@ const stackedPhotos = [
 
 export default function Test() {
   const stackRef = useRef<HTMLDivElement | null>(null);
+  const { baseTransition, prefersReducedMotion } = useMotionPresets();
   const isStackInView = useInView(stackRef, {
     once: true,
     amount: 0.55,
@@ -49,14 +52,17 @@ export default function Test() {
                 <motion.div
                   key={photo.src}
                   className="relative flex-1 overflow-hidden rounded-[28px] border border-white/15 bg-white/5 shadow-[0_25px_80px_rgba(0,0,0,0.35)]"
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={
+                    prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }
+                  }
                   animate={
-                    isStackInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }
+                    prefersReducedMotion || isStackInView
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 24 }
                   }
                   transition={{
-                    duration: 0.65,
-                    delay: delayOrder * 0.12,
-                    ease: [0.33, 1, 0.68, 1],
+                    ...baseTransition,
+                    delay: prefersReducedMotion ? 0 : delayOrder * 0.12,
                   }}
                 >
                   <Image

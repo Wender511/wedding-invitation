@@ -1,7 +1,8 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
-
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -33,21 +34,18 @@ const attendanceOptions = [
   { value: "coming", label: "Chắc chắn mình sẽ đến rồi!" },
   { value: "not-coming", label: "Mình bận mất rồi…" },
 ] as const;
-
 const guestOptions = [
   { value: "1", label: "1 người" },
   { value: "2", label: "2 người" },
   { value: "3", label: "3 người" },
   { value: "4", label: "4 người" },
 ] as const;
-
 const initialValues: RsvpFormValues = {
   name: "",
   message: "",
   attendance: "",
   guests: "",
 };
-
 const giftInfo = {
   heroImage: "/2O4A0125.jpg",
   qrImage: "/vietqr-tran-thi-ngoc-yen.png",
@@ -56,14 +54,13 @@ const giftInfo = {
   bankCode: "970432",
   accountNumber: "8486071120",
 } as const;
-
 const formattedAccountNumber = giftInfo.accountNumber.replace(
   /\B(?=(\d{3})+(?!\d))/g,
   " "
 );
-
 export default function RsvpFormSection() {
   const [formValues, setFormValues] = useState<RsvpFormValues>(initialValues);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const placeholders = useMemo(
     () => ({
       name: "Nhập tên của bạn",
@@ -73,19 +70,65 @@ export default function RsvpFormSection() {
     }),
     []
   );
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const showGuestSelect = formValues.attendance !== "not-coming";
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("RSVP_FORM_SUBMISSION", formValues);
+    if (!formValues.attendance) {
+      toast.error('Bạn chưa cho tụi mình biết là có đến dự không đó 😊');
+      return;
+    }
+    const requiresGuestCount = formValues.attendance === "coming";
+    const guestCount = requiresGuestCount ? Number(formValues.guests) : 0;
+    if (requiresGuestCount && !formValues.guests) {
+      toast.error('Bạn vui lòng chọn số lượng khách đi cùng nhé.');
+      return;
+    }
+    if (requiresGuestCount && (!Number.isFinite(guestCount) || guestCount <= 0)) {
+     toast.error('Số lượng khách không hợp lệ. Vui lòng thử lại.');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("/api/guests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formValues.name.trim(),
+          message: formValues.message.trim(),
+          attendance: formValues.attendance,
+          guests: guestCount,
+        }),
+      });
+      await response.json().catch(() => null);
+      setFormValues(initialValues);
+      formValues.attendance === 'coming'
+        ? toast.success('Cảm ơn bạn đã gửi lời nhắn. Hẹn gặp lại tại đám cưới nhé!')
+        : toast.success(
+            'Cảm ơn bạn đã phản hồi! Rất tiếc bạn không thể đến dự cùng chúng mình. Hẹn gặp bạn vào dịp khác nhé!'
+          );
+    } catch (error) {
+      console.error("RSVP_FORM_SUBMIT_ERROR", error);
+      toast.error("Đã có lỗi xảy ra. Vui lòng thử lại");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
-
   const updateField = <K extends keyof RsvpFormValues>(
     field: K,
     value: RsvpFormValues[K]
   ) => {
-    setFormValues((prev) => ({ ...prev, [field]: value }));
+    setFormValues((prev) => {
+      const next = { ...prev, [field]: value };
+      if (field === "attendance") {
+        const attendanceValue = value as RsvpFormValues["attendance"];
+        next.guests =
+          attendanceValue === "not-coming" ? "" : next.guests || "1";
+      }
+      return next;
+    });
   };
-
   return (
     <section
       id="rsvp"
@@ -96,16 +139,13 @@ export default function RsvpFormSection() {
         <div className="rounded-xl border border-rose-100/70 bg-white/90 p-6 shadow-[0_35px_60px_-15px_rgba(244,114,182,0.15)] backdrop-blur">
           <div className="space-y-3 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.4em] text-rose-300">
-              RSVP FORM
+              HOÀNG LONG & NGỌC YẾN
             </p>
-            <h2 className="font-serif text-2xl text-slate-800 sm:text-3xl">
-              Gửi lời nhắn yêu thương
-            </h2>
+            <h2 className="font-serif text-2xl text-slate-800 sm:text-3xl">Gửi lời yêu thương</h2>
             <p className="text-sm text-muted-foreground">
               Hãy xác nhận tham dự và viết đôi dòng dành tặng cô dâu chú rể nhé.
             </p>
           </div>
-
           <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label
@@ -122,9 +162,9 @@ export default function RsvpFormSection() {
                 className="h-12 rounded-xl border-rose-100/90 bg-white/90 text-sm text-slate-700 placeholder:text-slate-400 focus-visible:border-rose-200 focus-visible:ring-rose-200/50"
                 autoComplete="name"
                 required
+
               />
             </div>
-
             <div className="space-y-2">
               <label
                 htmlFor="rsvp-message"
@@ -140,7 +180,6 @@ export default function RsvpFormSection() {
                 className="min-h-[120px] rounded-xl border-rose-100/90 bg-white/90 text-sm text-slate-700 placeholder:text-slate-400 focus-visible:border-rose-200 focus-visible:ring-rose-200/50"
               />
             </div>
-
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <span className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-200">
@@ -149,6 +188,7 @@ export default function RsvpFormSection() {
                 <Select
                   value={formValues.attendance}
                   onValueChange={(value) => updateField('attendance', value)}
+
                 >
                   <SelectTrigger className="h-12 rounded-xl border-rose-100/90 bg-white/90 text-left text-sm text-slate-700 placeholder:text-slate-400 focus:ring-rose-200/50">
                     <SelectValue placeholder={placeholders.attendance} />
@@ -166,41 +206,42 @@ export default function RsvpFormSection() {
                   </SelectContent>
                 </Select>
               </div>
-
-              <div className="space-y-2">
-                <span className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-200">
-                  Số lượng
-                </span>
-                <Select
-                  value={formValues.guests}
-                  onValueChange={(value) => updateField('guests', value)}
-                >
-                  <SelectTrigger className="h-12 rounded-xl border-rose-100/90 bg-white/90 text-left text-sm text-slate-700 placeholder:text-slate-400 focus:ring-rose-200/50">
-                    <SelectValue placeholder={placeholders.guests} />
-                  </SelectTrigger>
-                  <SelectContent className="rounded-xl border-rose-100 bg-white/95 shadow-lg">
-                    {guestOptions.map((option) => (
-                      <SelectItem
-                        key={option.value}
-                        value={option.value}
-                        className="text-sm text-slate-700"
-                      >
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              {showGuestSelect && (
+                <div className="space-y-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-200">
+                    Số Lượng
+                  </span>
+                  <Select
+                    value={formValues.guests}
+                    onValueChange={(value) => updateField('guests', value)}
+                  >
+                    <SelectTrigger className="h-12 rounded-xl border-rose-100/90 bg-white/90 text-left text-sm text-slate-700 placeholder:text-slate-400 focus:ring-rose-200/50">
+                      <SelectValue placeholder={placeholders.guests} />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-xl border-rose-100 bg-white/95 shadow-lg">
+                      {guestOptions.map((option) => (
+                        <SelectItem
+                          key={option.value}
+                          value={option.value}
+                          className="text-sm text-slate-700"
+                        >
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
             </div>
-
             <div className="grid gap-3 sm:grid-cols-2">
               <Button
                 type="submit"
-                className="h-12 rounded-xl bg-rose-400 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow-rose-200 transition hover:bg-rose-500"
+                disabled={isSubmitting}
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-rose-400 text-xs font-semibold uppercase tracking-[0.3em] text-white shadow-rose-200 transition hover:bg-rose-500 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                GỬI LỜI NHẮN &amp; XÁC NHẬN
+                {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
+                <span>Gửi lời nhắn cho dâu rể</span>
               </Button>
-
               <Dialog>
                 <DialogTrigger asChild>
                   <Button

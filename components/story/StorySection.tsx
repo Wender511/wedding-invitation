@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-const ease = [0.16, 1, 0.3, 1] as const;
+import { useMotionPresets } from "@/hooks/useMotionPresets";
 
 const copy = {
   story: {
@@ -28,7 +28,7 @@ const copy = {
 } as const;
 
 export default function StorySection() {
-  const prefersReducedMotion = useReducedMotion();
+  const { fadeIn, container, viewport, prefersReducedMotion } = useMotionPresets();
   const imageRef = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({
@@ -44,68 +44,11 @@ export default function StorySection() {
 
   const parallaxStyle = prefersReducedMotion ? undefined : { y: imageParallax };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.6,
-        ease,
-        when: "beforeChildren",
-        staggerChildren: prefersReducedMotion ? 0 : 0.18,
-      },
-    },
-  };
-
-  const textVariants = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 24 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.7,
-        ease,
-      },
-    },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 28 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.75,
-        ease,
-        delay: prefersReducedMotion ? 0 : 0.1,
-      },
-    },
-  };
-
-  const familiesVariants = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 28 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.8,
-        ease,
-        staggerChildren: prefersReducedMotion ? 0 : 0.16,
-      },
-    },
-  };
-
-  const familyCardVariants = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 24 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: prefersReducedMotion ? 0 : 0.65,
-        ease,
-      },
-    },
-  };
+  const containerVariants = container({ offset: 0, duration: 0.6, staggerChildren: 0.18 });
+  const textVariants = fadeIn({ offset: 24, duration: 0.7 });
+  const imageVariants = fadeIn({ offset: 28, duration: 0.75, delay: 0.1 });
+  const familiesVariants = container({ offset: 28, duration: 0.8, staggerChildren: 0.16 });
+  const familyCardVariants = fadeIn({ offset: 24, duration: 0.65 });
 
   return (
     <motion.section
@@ -113,7 +56,7 @@ export default function StorySection() {
       data-scroll-section="true"
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={viewport}
       className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 min-h-dvh snap-start "
     >
       <motion.div
