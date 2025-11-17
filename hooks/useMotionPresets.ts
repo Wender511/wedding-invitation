@@ -3,6 +3,9 @@ import { useReducedMotion } from "framer-motion";
 
 export const DEFAULT_EASE = [0.33, 1, 0.68, 1] as const;
 export const DEFAULT_VIEWPORT = { once: true, amount: 0.35 } as const;
+const BASE_DURATION = 0.65;
+const DEFAULT_STAGGER = 0.12;
+const MOTION_SPEED_FACTOR = 0.85;
 
 type FadeOptions = {
   offset?: number;
@@ -33,13 +36,32 @@ type SpinOptions = ScaleOptions & {
 
 export function useMotionPresets() {
   const prefersReducedMotion = useReducedMotion();
+  const speedFactor = prefersReducedMotion ? 1 : MOTION_SPEED_FACTOR;
+
+  const resolveDuration = useCallback(
+    (duration?: number) =>
+      prefersReducedMotion ? 0 : (duration ?? BASE_DURATION) * speedFactor,
+    [prefersReducedMotion, speedFactor]
+  );
+
+  const resolveDelay = useCallback(
+    (delay?: number) =>
+      prefersReducedMotion ? 0 : (delay ?? 0) * speedFactor,
+    [prefersReducedMotion, speedFactor]
+  );
+
+  const resolveStagger = useCallback(
+    (stagger?: number) =>
+      prefersReducedMotion ? 0 : (stagger ?? DEFAULT_STAGGER) * speedFactor,
+    [prefersReducedMotion, speedFactor]
+  );
 
   const baseTransition = useMemo(
     () => ({
-      duration: prefersReducedMotion ? 0 : 0.65,
+      duration: resolveDuration(),
       ease: DEFAULT_EASE,
     }),
-    [prefersReducedMotion]
+    [resolveDuration]
   );
 
   const createSlideFade = useCallback(
@@ -75,15 +97,13 @@ export function useMotionPresets() {
           y: 0,
           transition: {
             ...baseTransition,
-            duration: prefersReducedMotion
-              ? 0
-              : options.duration ?? baseTransition.duration,
-            delay: prefersReducedMotion ? 0 : options.delay ?? 0,
+            duration: resolveDuration(options.duration),
+            delay: resolveDelay(options.delay),
           },
         },
       };
     },
-    [baseTransition, prefersReducedMotion]
+    [baseTransition, prefersReducedMotion, resolveDelay, resolveDuration]
   );
 
   const createFadeIn = useCallback(
@@ -105,17 +125,13 @@ export function useMotionPresets() {
           when: options.when ?? "beforeChildren",
           delayChildren: prefersReducedMotion
             ? 0
-            : options.delayChildren ?? 0,
-          staggerChildren: prefersReducedMotion
-            ? 0
-            : options.staggerChildren ?? 0.12,
-          duration: prefersReducedMotion
-            ? 0
-            : options.duration ?? baseTransition.duration,
+            : resolveDelay(options.delayChildren),
+          staggerChildren: resolveStagger(options.staggerChildren),
+          duration: resolveDuration(options.duration),
         },
       },
     }),
-    [baseTransition, prefersReducedMotion]
+    [baseTransition, prefersReducedMotion, resolveDelay, resolveDuration, resolveStagger]
   );
 
   const createScaleIn = useCallback(
@@ -129,14 +145,12 @@ export function useMotionPresets() {
         scale: prefersReducedMotion ? 1 : options.targetScale ?? 1,
         transition: {
           ...baseTransition,
-          duration: prefersReducedMotion
-            ? 0
-            : options.duration ?? baseTransition.duration,
-          delay: prefersReducedMotion ? 0 : options.delay ?? 0,
+          duration: resolveDuration(options.duration),
+          delay: resolveDelay(options.delay),
         },
       },
     }),
-    [baseTransition, prefersReducedMotion]
+    [baseTransition, prefersReducedMotion, resolveDelay, resolveDuration]
   );
 
   const createSpinIn = useCallback(
@@ -152,14 +166,14 @@ export function useMotionPresets() {
         scale: 1,
         transition: {
           ...baseTransition,
-          duration: prefersReducedMotion
-            ? 0
-            : options.duration ?? (baseTransition.duration ?? 0.65) + 0.1,
-          delay: prefersReducedMotion ? 0 : options.delay ?? 0,
+          duration: resolveDuration(
+            (options.duration ?? BASE_DURATION) + 0.1
+          ),
+          delay: resolveDelay(options.delay),
         },
       },
     }),
-    [baseTransition, prefersReducedMotion]
+    [baseTransition, prefersReducedMotion, resolveDelay, resolveDuration]
   );
 
   return {

@@ -31,7 +31,7 @@ import { albumPhotos } from "@/data/photos";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useMotionPresets } from "@/hooks/useMotionPresets";
-const MAIN_RATIO = 'aspect-[1]';
+const MAIN_RATIO = 'aspect-3/4';
 
 export default function Album() {
   const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null);
@@ -124,7 +124,7 @@ export default function Album() {
       initial="hidden"
       whileInView="show"
       viewport={viewport}
-      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[80dvh] md:h-dvh snap-start"
+      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[85dvh] md:h-dvh snap-start"
     >
       <motion.div
         variants={galleryVariants}
@@ -143,7 +143,8 @@ export default function Album() {
             loop
             navigation
             keyboard={{ enabled: true }}
-            autoplay={{ delay: 3600, disableOnInteraction: false }}
+            // autoplay={{ delay: 3600, disableOnInteraction: false }}
+            autoplay={false}
             thumbs={{ swiper: safeThumbsSwiper }}
             onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             onSwiper={(swiper) => setMainSwiper(swiper)}
