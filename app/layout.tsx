@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Hoàng Long & Ngpc Yến - Wedding Invitation",
+    title: "Hoàng Long & Ngọc Yến - Wedding Invitation",
     description: "Join us as we celebrate our special day",
     type: "website",
   },

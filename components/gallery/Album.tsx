@@ -143,8 +143,8 @@ export default function Album() {
             loop
             navigation
             keyboard={{ enabled: true }}
-            // autoplay={{ delay: 3600, disableOnInteraction: false }}
-            autoplay={false}
+            autoplay={{ delay: 3600, disableOnInteraction: false }}
+            // autoplay={false}
             thumbs={{ swiper: safeThumbsSwiper }}
             onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             onSwiper={(swiper) => setMainSwiper(swiper)}
