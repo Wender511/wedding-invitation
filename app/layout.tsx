@@ -29,6 +29,12 @@ export const metadata: Metadata = {
   description:
     "Join us as we celebrate our special day. RSVP for our wedding ceremony and reception.",
   authors: [{ name: "Long" }],
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+  },
   openGraph: {
     title: "Hoàng Long & Ngpc Yến - Wedding Invitation",
     description: "Join us as we celebrate our special day",
