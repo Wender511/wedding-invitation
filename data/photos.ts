@@ -24,7 +24,7 @@ const albumPhotoDefinitions: AlbumPhotoDefinition[] = [
     id: 'album-2O4A0091',
     alt: 'Bride leaning on groom in mobile crop',
     desktop: '/album/2O4A0091.jpg',
-    mobile: '/2O4A0091-mobile.JPG',
+    mobile: '/album/2O4A0091-mobile.jpg',
     detail: '/album/2O4A0091.jpg'
   },
   // {
