@@ -124,7 +124,7 @@ export default function Album() {
       initial="hidden"
       whileInView="show"
       viewport={viewport}
-      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[85dvh] md:h-dvh snap-start"
+      className="bg-linear-to-b from-rose-50/70 via-white to-rose-50/60 py-12 md:py-10 h-[85dvh] md:h-dvh snap-start block md:hidden"
     >
       <motion.div
         variants={galleryVariants}
@@ -200,10 +200,7 @@ export default function Album() {
             grabCursor
           >
             {displayPhotos.map((photo, index) => (
-              <SwiperSlide
-                key={`thumb-${photo.id}`}
-                className="h-auto! w-auto!"
-              >
+              <SwiperSlide key={`thumb-${photo.id}`} className="h-auto! w-auto!">
                 <div
                   role="button"
                   tabIndex={0}
@@ -232,7 +229,7 @@ export default function Album() {
         </motion.div>
       </motion.div>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}  >
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="border-none bg-transparent p-0 shadow-none">
           <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center gap-4">
             {detailCount > 0 && (

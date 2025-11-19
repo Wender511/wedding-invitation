@@ -12,6 +12,37 @@ import RsvpFormSection from "@/components/rsvp/RsvpFormSection";
 type LenisWindow = Window & { lenis?: Lenis };
 export default function Home() {
   useEffect(() => {
+    const abortController = new AbortController();
+
+    const warmupDatabaseConnection = async () => {
+      try {
+        await fetch("/api/database", {
+          method: "GET",
+          signal: abortController.signal,
+          cache: "no-store",
+        });
+      } catch (error) {
+        if (!abortController.signal.aborted) {
+          console.error("DATABASE_WARMUP_ERROR", error);
+        }
+      }
+    };
+
+    void warmupDatabaseConnection();
+
+    return () => {
+      abortController.abort();
+
+      void fetch("/api/database", {
+        method: "DELETE",
+        keepalive: true,
+      }).catch(() => {
+        // Safely ignore cleanup errors.
+      });
+    };
+  }, []);
+
+  useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     );
