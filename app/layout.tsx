@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Great_Vibes, Cinzel, Noto_Serif, Platypi } from "next/font/google";
+import { Great_Vibes, Cinzel, Noto_Serif } from "next/font/google";
 import "./globals.css";
 import { AppToaster } from "@/components/ui/toaster";
 
@@ -24,22 +24,39 @@ const scriptFont = Great_Vibes({
   display: "swap",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const pageTitle = "Hoàng Long & Ngọc Yến - Wedding Invitation";
+const pageDescription =
+  "Join us as we celebrate our special day. RSVP for our wedding ceremony and reception.";
+const shareImage = "/2O4A0125-pc.jpg";
+const appIcon = "/2O4A9869.jpg";
+
 export const metadata: Metadata = {
-  title: "Hoàng Long & Ngọc Yến - Wedding Invitation",
-  description:
-    "Join us as we celebrate our special day. RSVP for our wedding ceremony and reception.",
+  metadataBase: new URL(siteUrl),
+  title: pageTitle,
+  description: pageDescription,
   authors: [{ name: "Long" }],
   icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "32x32" },
-    ],
+    icon: [{ url: appIcon, type: "image/jpeg" }],
+    shortcut: [{ url: appIcon, type: "image/jpeg" }],
+    apple: [{ url: appIcon, type: "image/jpeg" }],
   },
   openGraph: {
-    title: "Hoàng Long & Ngọc Yến - Wedding Invitation",
-    description: "Join us as we celebrate our special day",
+    title: pageTitle,
+    description: pageDescription,
+    url: "/",
+    siteName: pageTitle,
+    images: [
+      {
+        url: shareImage,
+        width: 1200,
+        height: 630,
+        alt: "Hoàng Long & Ngọc Yến wedding portrait",
+      },
+    ],
     type: "website",
   },
+
 };
 
 export default function RootLayout({
