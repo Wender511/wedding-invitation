@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FormEvent, useMemo, useState } from "react";
 import { Loader2 } from "lucide-react";
@@ -74,7 +74,7 @@ export default function RsvpFormSection() {
     []
   );
   const showGuestSelect = formValues.attendance !== "not-coming";
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const trimmedPhone = formValues.phone.trim();
     if (!trimmedPhone) {
@@ -91,34 +91,34 @@ export default function RsvpFormSection() {
       toast.error('Bạn vui lòng chọn số lượng khách đi cùng nhé.');
       return;
     }
+    const payload = {
+      name: formValues.name.trim(),
+      phone: trimmedPhone,
+      message: formValues.message.trim(),
+      attendance: formValues.attendance,
+      guests: guestCount,
+    };
     setIsSubmitting(true);
-    try {
-      const response = await fetch("/api/guests", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formValues.name.trim(),
-          phone: trimmedPhone,
-          message: formValues.message.trim(),
-          attendance: formValues.attendance,
-          guests: guestCount,
-        }),
-      });
-      await response.json().catch(() => null);
+
+    void fetch("/api/guests", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }).catch((error) => {
+      console.error("RSVP_FORM_SUBMIT_ERROR", error);
+    });
+
+    window.setTimeout(() => {
+      setIsSubmitting(false);
       setFormValues(initialValues);
-      formValues.attendance === 'coming'
+      payload.attendance === "coming"
         ? toast.success('Cảm ơn bạn đã gửi lời nhắn. Hẹn gặp bạn tại lễ cưới nhé!')
         : toast.success(
             'Mình cũng rất tiếc khi bạn không thể đến chung vui cùng chúng mình. Hẹn gặp bạn vào dịp khác nhé! '
           );
-    } catch (error) {
-      console.error("RSVP_FORM_SUBMIT_ERROR", error);
-      toast.error("Đã có lỗi xảy ra. Vui lòng thử lại");
-    } finally {
-      setIsSubmitting(false);
-    }
+    }, 1000);
   };
   const updateField = <K extends keyof RsvpFormValues>(
     field: K,

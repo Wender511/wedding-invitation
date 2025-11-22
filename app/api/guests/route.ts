@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 import Guest from "@/models/guest";
+import { connectToDatabase } from "@/lib/mongodb";
 
 export async function POST(request: Request) {
   try {
+     await connectToDatabase();
     const body = await request.json();
     const phone =
       typeof body.phone === "string" ? body.phone.trim() : "";
@@ -47,6 +49,7 @@ export async function POST(request: Request) {
           ? body.guests
           : undefined,
     });
+    console.log(guest);
 
     return NextResponse.json(
       {
